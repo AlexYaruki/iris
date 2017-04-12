@@ -1,0 +1,27 @@
+{ //NOTE: 64-bit vectors
+    uint8_t   vget_lane_u8  (  uint8x8_t, const int)
+    uint16_t  vget_lane_u16 ( uint16x4_t, const int)
+    uint32_t  vget_lane_u32 ( uint32x2_t, const int)
+    uint64_t  vget_lane_u64 ( uint64x1_t, const int)
+
+    int8_t    vget_lane_s8  (   int8x8_t, const int)
+    int16_t   vget_lane_s16 (  int16x4_t, const int)
+    int32_t   vget_lane_s32 (  int32x2_t, const int)
+    int64_t   vget_lane_s64 (  int64x1_t, const int)
+
+    float32_t vget_lane_f32 (float32x2_t, const int)
+}
+
+{ //NOTE: 128-bit vectors
+    uint8_t   vgetq_lane_u8  (uint8x16_t, const int)
+    uint16_t  vgetq_lane_u16 (uint16x8_t, const int)
+    uint32_t  vgetq_lane_u32 (uint32x4_t, const int)
+    uint64_t  vgetq_lane_u64 (uint64x2_t, const int)
+
+    int8_t    vgetq_lane_s8  (  int8x16_t, const int)
+    int16_t   vgetq_lane_s16 (  int16x8_t, const int)
+    int32_t   vgetq_lane_s32 (  int32x4_t, const int)
+    int64_t   vgetq_lane_s64 (  int64x2_t, const int)
+
+    float32_t vgetq_lane_f32 (float32x4_t, const int)
+}

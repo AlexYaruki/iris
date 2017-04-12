@@ -1,0 +1,79 @@
+{ //NOTE: 64-bit vectors
+    uint8x8_t  vdup_n_u8 (uint8_t)                                         //DONE
+    uint16x4_t vdup_n_u16 (uint16_t)                                       //DONE
+    uint32x2_t vdup_n_u32 (uint32_t)                                       //DONE
+    uint64x1_t vdup_n_u64 (uint64_t)                                       //DONE
+
+    uint8x8_t  vmov_n_u8 (uint8_t)                                         //DONE
+    uint16x4_t vmov_n_u16 (uint16_t)                                       //DONE
+    uint32x2_t vmov_n_u32 (uint32_t)                                       //DONE
+    uint64x1_t vmov_n_u64 (uint64_t)                                       //DONE
+
+    int8x8_t  vmov_n_s8 (int8_t)                                           //DONE
+    int16x4_t vmov_n_s16 (int16_t)                                         //DONE
+    int32x2_t vmov_n_s32 (int32_t)                                         //DONE
+    int64x1_t vmov_n_s64 (int64_t)                                         //DONE
+
+    int8x8_t  vdup_n_s8 (int8_t)                                           //DONE
+    int16x4_t vdup_n_s16 (int16_t)                                         //DONE
+    int32x2_t vdup_n_s32 (int32_t)                                         //DONE
+    int64x1_t vdup_n_s64 (int64_t)                                         //DONE
+
+    float32x2_t vdup_n_f32 (float32_t)                                     //DONE
+    float32x2_t vmov_n_f32 (float32_t)                                     //DONE
+
+}
+
+{ //NOTE: 128-bit vectors
+    uint8x16_t vdupq_n_u8 (uint8_t)                                        //DONE
+    uint16x8_t vdupq_n_u16 (uint16_t)                                      //DONE
+    uint32x4_t vdupq_n_u32 (uint32_t)                                      //DONE
+    uint64x2_t vdupq_n_u64 (uint64_t)                                      //DONE
+
+    uint8x16_t vmovq_n_u8 (uint8_t)                                        //DONE
+    uint16x8_t vmovq_n_u16 (uint16_t)                                      //DONE
+    uint32x4_t vmovq_n_u32 (uint32_t)                                      //DONE
+    uint64x2_t vmovq_n_u64 (uint64_t)                                      //DONE
+
+    int8x16_t vdupq_n_s8 (int8_t)                                          //DONE
+    int16x8_t vdupq_n_s16 (int16_t)                                        //DONE
+    int32x4_t vdupq_n_s32 (int32_t)                                        //DONE
+    int64x2_t vdupq_n_s64 (int64_t)                                        //DONE
+
+    int8x16_t vmovq_n_s8 (int8_t)                                          //DONE
+    int16x8_t vmovq_n_s16 (int16_t)                                        //DONE
+    int32x4_t vmovq_n_s32 (int32_t)                                        //DONE
+    int64x2_t vmovq_n_s64 (int64_t)                                        //DONE
+
+    float32x4_t vdupq_n_f32 (float32_t)                                    //DONE
+    float32x4_t vmovq_n_f32 (float32_t)                                    //DONE
+}
+
+
+{ //NOTE: 64-bit vectors
+    uint8x8_t   vdup_lane_u8  (uint8x8_t,  const int)                      //DONE
+    uint16x4_t  vdup_lane_u16 (uint16x4_t, const int)                      //DONE
+    uint32x2_t  vdup_lane_u32 (uint32x2_t, const int)                      //DONE
+    uint64x1_t  vdup_lane_u64 (uint64x1_t, const int)                      //DONE
+
+    int8x8_t    vdup_lane_s8  (int8x8_t,   const int)                      //DONE
+    int16x4_t   vdup_lane_s16 (int16x4_t,  const int)                      //DONE
+    int32x2_t   vdup_lane_s32 (int32x2_t,  const int)                      //DONE
+    int64x1_t   vdup_lane_s64 (int64x1_t,  const int)                      //DONE
+
+    float32x2_t vdup_lane_f32 (float32x2_t, const int)                     //DONE
+}
+
+{ //NOTE: 128-bit vectors
+    uint8x16_t vdupq_lane_u8 (uint8x8_t, const int)                        //DONE
+    uint16x8_t vdupq_lane_u16 (uint16x4_t, const int)                      //DONE
+    uint32x4_t vdupq_lane_u32 (uint32x2_t, const int)                      //DONE
+    uint64x2_t vdupq_lane_u64 (uint64x1_t, const int)                      //DONE
+
+    int8x16_t vdupq_lane_s8 (int8x8_t, const int)                          //DONE
+    int16x8_t vdupq_lane_s16 (int16x4_t, const int)                        //DONE
+    int32x4_t vdupq_lane_s32 (int32x2_t, const int)                        //DONE
+    int64x2_t vdupq_lane_s64 (int64x1_t, const int)                        //DONE
+
+    float32x4_t vdupq_lane_f32 (float32x2_t, const int)                    //DONE 
+}
