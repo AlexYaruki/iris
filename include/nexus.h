@@ -46,6 +46,16 @@ namespace nexus {
         return result;
     }
 
+    template<typename T, typename R>
+    R __vaddl(T v1, T v2) {
+        R result;
+        for(size_t i = 0; i < T::length; i++) {
+            result.template at<typename R::elementType>(i) = (typename R::elementType)v1.template at<typename T::elementType>(i) + v2.template at<typename T::elementType>(i);
+        }
+        return result;
+    }
+
+
     template<typename T>
     T __vmul(T v1, T v2) {
         T result;
@@ -172,7 +182,7 @@ namespace nexus {
     const auto& vdup_lane_f32 = __vdup_lane<uint64_1_t, uint64_t>;
     ///////////////////////////////////////////////////////////////////////////
 
-    // ARM NEON - vdup_lane - 128-bit vectors //////////////////////////////////
+    // ARM NEON - vdup_lane - 128-bit vectors /////////////////////////////////
     const auto& vdupq_lane_s8  = __vdup_lane<int8_16_t,  int8_t>;
     const auto& vdupq_lane_s16 = __vdup_lane<int16_8_t, int16_t>;
     const auto& vdupq_lane_s32 = __vdup_lane<int32_4_t, int32_t>;
@@ -186,15 +196,47 @@ namespace nexus {
     const auto& vdupq_lane_f32 = __vdup_lane<uint64_2_t, uint64_t>;
     ///////////////////////////////////////////////////////////////////////////
 
+    // ARM NEON - vadd - 64-bit vectors ///////////////////////////////////////
+    const auto& vadd_u8  = __vadd< uint8_8_t>;
+    const auto& vadd_u16 = __vadd<uint16_4_t>;
+    const auto& vadd_u32 = __vadd<uint32_2_t>;
+    const auto& vadd_u64 = __vadd<uint64_1_t>;
 
-    const auto& vadd_s32 = __vadd<int32_2_t>;
-    const auto& vmul_s32 = __vmul<int32_2_t>;
+    const auto& vadd_s8  = __vadd<  int8_8_t>;
+    const auto& vadd_s16 = __vadd< int16_4_t>;
+    const auto& vadd_s32 = __vadd< int32_2_t>;
+    const auto& vadd_s64 = __vadd< int64_1_t>;
+
+    const auto& vadd_f32 = __vmul<float32_2_t>;
+    ///////////////////////////////////////////////////////////////////////////
+
+    // ARM NEON - vadd - 128-bit vectors ///////////////////////////////////////
+    const auto& vaddq_u8  = __vadd<uint8_16_t>;
+    const auto& vaddq_u16 = __vadd<uint16_8_t>;
+    const auto& vaddq_u32 = __vadd<uint32_4_t>;
+    const auto& vaddq_u64 = __vadd<uint64_2_t>;
+
+    const auto& vaddq_s8  = __vadd< int8_16_t>;
+    const auto& vaddq_s16 = __vadd< int16_8_t>;
+    const auto& vaddq_s32 = __vadd< int32_4_t>;
+    const auto& vaddq_s64 = __vadd< int64_2_t>;
+
+    const auto& vaddq_f32 = __vmul<float32_4_t>;
+    ///////////////////////////////////////////////////////////////////////////
+
+    const auto& vaddl_s8  = __vaddl< int8_8_t,int16_8_t>;
+    const auto& vaddl_s16 = __vaddl<int16_4_t,int32_4_t>;
+    const auto& vaddl_s32 = __vaddl<int32_2_t,int64_2_t>;
+
+    const auto& vaddl_u8  = __vaddl< uint8_8_t,uint16_8_t>;
+    const auto& vaddl_u16 = __vaddl<uint16_4_t,uint32_4_t>;
+    const auto& vaddl_u32 = __vaddl<uint32_2_t,uint64_2_t>;
+
 }
-
 
 #endif
 
 /*
-VDUP_N duplicates a scalar into every element of the destination vector.
-VMOV_N duplicates a scalar into every element of the destination vector.
+template<typename T, typename R>
+R __vaddl(T v1, T v2) {
 */
