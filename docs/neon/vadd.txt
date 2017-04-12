@@ -1,39 +1,39 @@
-{//NOTE 64-bit vectors
-    uint8x8_t   vadd_u8 (uint8x8_t, uint8x8_t)
-    uint16x4_t  vadd_u16 (uint16x4_t, uint16x4_t)
-    uint32x2_t  vadd_u32 (uint32x2_t, uint32x2_t)
-    uint64x1_t  vadd_u64 (uint64x1_t, uint64x1_t)
+{//NOTE vadd    64-bit vectors
+    uint8x8_t   vadd_u8 (uint8x8_t, uint8x8_t)                           //DONE
+    uint16x4_t  vadd_u16 (uint16x4_t, uint16x4_t)                        //DONE
+    uint32x2_t  vadd_u32 (uint32x2_t, uint32x2_t)                        //DONE
+    uint64x1_t  vadd_u64 (uint64x1_t, uint64x1_t)                        //DONE
 
-    int8x8_t    vadd_s8 (int8x8_t, int8x8_t)
-    int16x4_t   vadd_s16 (int16x4_t, int16x4_t)
-    int32x2_t   vadd_s32 (int32x2_t, int32x2_t)
-    int64x1_t   vadd_s64 (int64x1_t, int64x1_t)
+    int8x8_t    vadd_s8 (int8x8_t, int8x8_t)                             //DONE
+    int16x4_t   vadd_s16 (int16x4_t, int16x4_t)                          //DONE
+    int32x2_t   vadd_s32 (int32x2_t, int32x2_t)                          //DONE
+    int64x1_t   vadd_s64 (int64x1_t, int64x1_t)                          //DONE
 
-    float32x2_t vadd_f32 (float32x2_t, float32x2_t)
+    float32x2_t vadd_f32 (float32x2_t, float32x2_t)                      //DONE
 }
-{//NOTE 128-bit vectors
-    uint8x16_t vaddq_u8 (uint8x16_t, uint8x16_t)
-    uint16x8_t vaddq_u16 (uint16x8_t, uint16x8_t)
-    uint32x4_t vaddq_u32 (uint32x4_t, uint32x4_t)
-    uint64x2_t vaddq_u64 (uint64x2_t, uint64x2_t)
+{//NOTE vadd   128-bit vectors
+    uint8x16_t vaddq_u8 (uint8x16_t, uint8x16_t)                         //DONE
+    uint16x8_t vaddq_u16 (uint16x8_t, uint16x8_t)                        //DONE
+    uint32x4_t vaddq_u32 (uint32x4_t, uint32x4_t)                        //DONE
+    uint64x2_t vaddq_u64 (uint64x2_t, uint64x2_t)                        //DONE
 
-    int8x16_t vaddq_s8 (int8x16_t, int8x16_t)
-    int16x8_t vaddq_s16 (int16x8_t, int16x8_t)
-    int32x4_t vaddq_s32 (int32x4_t, int32x4_t)
-    int64x2_t vaddq_s64 (int64x2_t, int64x2_t)
+    int8x16_t vaddq_s8 (int8x16_t, int8x16_t)                            //DONE
+    int16x8_t vaddq_s16 (int16x8_t, int16x8_t)                           //DONE
+    int32x4_t vaddq_s32 (int32x4_t, int32x4_t)                           //DONE
+    int64x2_t vaddq_s64 (int64x2_t, int64x2_t)                           //DONE
 
-    float32x4_t vaddq_f32 (float32x4_t, float32x4_t)
+    float32x4_t vaddq_f32 (float32x4_t, float32x4_t)                     //DONE
 }
-{
-    uint16x8_t vaddl_u8 (uint8x8_t, uint8x8_t)
-    uint32x4_t vaddl_u16 (uint16x4_t, uint16x4_t)
-    uint64x2_t vaddl_u32 (uint32x2_t, uint32x2_t)
+{//NOTE vaddl
+    uint16x8_t vaddl_u8 (uint8x8_t, uint8x8_t)                           //DONE
+    uint32x4_t vaddl_u16 (uint16x4_t, uint16x4_t)                        //DONE
+    uint64x2_t vaddl_u32 (uint32x2_t, uint32x2_t)                        //DONE
 
-    int16x8_t vaddl_s8 (int8x8_t, int8x8_t)
-    int32x4_t vaddl_s16 (int16x4_t, int16x4_t)
-    int64x2_t vaddl_s32 (int32x2_t, int32x2_t)
+    int16x8_t vaddl_s8 (int8x8_t, int8x8_t)                              //DONE
+    int32x4_t vaddl_s16 (int16x4_t, int16x4_t)                           //DONE
+    int64x2_t vaddl_s32 (int32x2_t, int32x2_t)                           //DONE
 }
-{
+{//NOTE vaddw
     uint16x8_t vaddw_u8 (uint16x8_t, uint8x8_t)
     uint32x4_t vaddw_u16 (uint32x4_t, uint16x4_t)
     uint64x2_t vaddw_u32 (uint64x2_t, uint32x2_t)
@@ -42,7 +42,7 @@
     int32x4_t vaddw_s16 (int32x4_t, int16x4_t)
     int64x2_t vaddw_s32 (int64x2_t, int32x2_t)
 }
-{
+{//NOTE vhadd   64-bit vectors
     uint8x8_t vhadd_u8 (uint8x8_t, uint8x8_t)
     uint16x4_t vhadd_u16 (uint16x4_t, uint16x4_t)
     uint32x2_t vhadd_u32 (uint32x2_t, uint32x2_t)
@@ -51,7 +51,7 @@
     int16x4_t vhadd_s16 (int16x4_t, int16x4_t)
     int32x2_t vhadd_s32 (int32x2_t, int32x2_t)
 }
-{
+{//NOTE vhadd  128-bit vectors
     uint8x16_t vhaddq_u8 (uint8x16_t, uint8x16_t)
     uint16x8_t vhaddq_u16 (uint16x8_t, uint16x8_t)
     uint32x4_t vhaddq_u32 (uint32x4_t, uint32x4_t)
@@ -60,7 +60,7 @@
     int16x8_t vhaddq_s16 (int16x8_t, int16x8_t)
     int32x4_t vhaddq_s32 (int32x4_t, int32x4_t)
 }
-{
+{//NOTE vrhadd  64-bit vectors
     uint8x8_t vrhadd_u8 (uint8x8_t, uint8x8_t)
     uint16x4_t vrhadd_u16 (uint16x4_t, uint16x4_t)
     uint32x2_t vrhadd_u32 (uint32x2_t, uint32x2_t)
@@ -69,7 +69,7 @@
     int16x4_t vrhadd_s16 (int16x4_t, int16x4_t)
     int32x2_t vrhadd_s32 (int32x2_t, int32x2_t)
 }
-{
+{//NOTE vrhadd 128-bit vectors
     uint8x16_t vrhaddq_u8 (uint8x16_t, uint8x16_t)
     uint16x8_t vrhaddq_u16 (uint16x8_t, uint16x8_t)
     uint32x4_t vrhaddq_u32 (uint32x4_t, uint32x4_t)
@@ -78,7 +78,7 @@
     int16x8_t vrhaddq_s16 (int16x8_t, int16x8_t)
     int32x4_t vrhaddq_s32 (int32x4_t, int32x4_t)
 }
-{
+{//NOTE vqadd   64-bit vectors
     uint8x8_t vqadd_u8 (uint8x8_t, uint8x8_t)
     uint16x4_t vqadd_u16 (uint16x4_t, uint16x4_t)
     uint32x2_t vqadd_u32 (uint32x2_t, uint32x2_t)
@@ -89,7 +89,7 @@
     int32x2_t vqadd_s32 (int32x2_t, int32x2_t)
     int64x1_t vqadd_s64 (int64x1_t, int64x1_t)
 }
-{
+{//NOTE vqadd  128-bit vectors
     uint8x16_t vqaddq_u8 (uint8x16_t, uint8x16_t)
     uint16x8_t vqaddq_u16 (uint16x8_t, uint16x8_t)
     uint32x4_t vqaddq_u32 (uint32x4_t, uint32x4_t)
@@ -100,7 +100,7 @@
     int32x4_t vqaddq_s32 (int32x4_t, int32x4_t)
     int64x2_t vqaddq_s64 (int64x2_t, int64x2_t)
 }
-{
+{//NOTE vaddhn
     uint8x8_t vaddhn_u16 (uint16x8_t, uint16x8_t)
     uint16x4_t vaddhn_u32 (uint32x4_t, uint32x4_t)
     uint32x2_t vaddhn_u64 (uint64x2_t, uint64x2_t)
@@ -109,7 +109,7 @@
     int16x4_t vaddhn_s32 (int32x4_t, int32x4_t)
     int8x8_t vaddhn_s16 (int16x8_t, int16x8_t)
 }
-{
+{//NOTE vraddhn
     uint8x8_t vraddhn_u16 (uint16x8_t, uint16x8_t)
     uint16x4_t vraddhn_u32 (uint32x4_t, uint32x4_t)
     uint32x2_t vraddhn_u64 (uint64x2_t, uint64x2_t)

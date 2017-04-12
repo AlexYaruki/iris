@@ -2,6 +2,7 @@
 #define NEXUS_H
 
 #include <cstdint>
+#include <limits>
 
 namespace nexus {
 
@@ -35,6 +36,17 @@ namespace nexus {
     template<typename T, typename E>
     T __vdup_lane(T v, size_t i) {
         return __vdup<T,E>(__vget_lane<T,E>(v,i));
+    }
+    template<typename T, typename R>
+    R __vceq(T v1, T v2) {
+        R result;
+        for(size_t i = 0; T::length; i++) {
+            if(v1.template at<typename T::elementType>(i) == v2.template at<typename T::elementType>(i)) {
+                result.template at<typename R::elementType>(i) = std::numeric_limits<typename R::elementType>::max();
+            } else {
+                result.template at<typename R::elementType>(i) = std::numeric_limits<typename R::elementType>::min();
+            }
+        }
     }
 
     template<typename T>
@@ -210,7 +222,7 @@ namespace nexus {
     const auto& vadd_f32 = __vmul<float32_2_t>;
     ///////////////////////////////////////////////////////////////////////////
 
-    // ARM NEON - vadd - 128-bit vectors ///////////////////////////////////////
+    // ARM NEON - vadd - 128-bit vectors //////////////////////////////////////
     const auto& vaddq_u8  = __vadd<uint8_16_t>;
     const auto& vaddq_u16 = __vadd<uint16_8_t>;
     const auto& vaddq_u32 = __vadd<uint32_4_t>;
@@ -221,9 +233,10 @@ namespace nexus {
     const auto& vaddq_s32 = __vadd< int32_4_t>;
     const auto& vaddq_s64 = __vadd< int64_2_t>;
 
-    const auto& vaddq_f32 = __vmul<float32_4_t>;
+    const auto& vaddq_f32 = __vadd<float32_4_t>;
     ///////////////////////////////////////////////////////////////////////////
 
+    // ARM NEON - vaddl ///////////////////////////////////////////////////////
     const auto& vaddl_s8  = __vaddl< int8_8_t,int16_8_t>;
     const auto& vaddl_s16 = __vaddl<int16_4_t,int32_4_t>;
     const auto& vaddl_s32 = __vaddl<int32_2_t,int64_2_t>;
@@ -231,6 +244,32 @@ namespace nexus {
     const auto& vaddl_u8  = __vaddl< uint8_8_t,uint16_8_t>;
     const auto& vaddl_u16 = __vaddl<uint16_4_t,uint32_4_t>;
     const auto& vaddl_u32 = __vaddl<uint32_2_t,uint64_2_t>;
+    ///////////////////////////////////////////////////////////////////////////
+
+    // ARM NEON - vceq - 64-bit vectors ///////////////////////////////////////
+    const auto& vceq_u8  = __vceq<   uint8x8_t,  uint8_8_t>;
+    const auto& vceq_u16 = __vceq<  uint16x4_t, uint16_4_t>;
+    const auto& vceq_u32 = __vceq<  uint32x2_t, uint32_2_t>;
+
+    const auto& vceq_s8  = __vceq<    int8x8_t,  uint8_8_t>;
+    const auto& vceq_s16 = __vceq<   int16x4_t, uint16_4_t>;
+    const auto& vceq_s32 = __vceq<   int32x2_t, uint32_2_t>;
+
+    const auto& vceq_f32 = __vceq< float32x2_t, uint32_2_t>;
+    ///////////////////////////////////////////////////////////////////////////
+
+    // ARM NEON - vceq - 128-bit vectors ///////////////////////////////////////
+    const auto& vceqq_u8  = __vceq<  uint8x16_t, uint8_16_t>;
+    const auto& vceqq_u16 = __vceq<  uint16x8_t, uint16_8_t>;
+    const auto& vceqq_u32 = __vceq<  uint32x4_t, uint32_4_t>;
+
+    const auto& vceqq_s8  = __vceq<   int8x16_t, uint8_16_t>;
+    const auto& vceqq_s16 = __vceq<   int16x8_t, uint16_8_t>;
+    const auto& vceqq_s32 = __vceq<   int32x4_t, uint32_4_t>;
+
+    const auto& vceqq_f32 = __vceq< float32x4_t, uint32_4_t>;
+    ///////////////////////////////////////////////////////////////////////////
+
 
 }
 
