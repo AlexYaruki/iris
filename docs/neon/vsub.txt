@@ -1,0 +1,120 @@
+{//NOTE vsub    64-bit vectors
+    uint8x8_t   vsub_u8 (uint8x8_t, uint8x8_t)                           //DONE
+    uint16x4_t  vsub_u16 (uint16x4_t, uint16x4_t)                        //DONE
+    uint32x2_t  vsub_u32 (uint32x2_t, uint32x2_t)                        //DONE
+    uint64x1_t  vsub_u64 (uint64x1_t, uint64x1_t)                        //DONE
+
+    int8x8_t    vsub_s8 (int8x8_t, int8x8_t)                             //DONE
+    int16x4_t   vsub_s16 (int16x4_t, int16x4_t)                          //DONE
+    int32x2_t   vsub_s32 (int32x2_t, int32x2_t)                          //DONE
+    int64x1_t   vsub_s64 (int64x1_t, int64x1_t)                          //DONE
+
+    float32x2_t vsub_f32 (float32x2_t, float32x2_t)
+}
+{//NOTE vsub   128-bit vectors
+    uint8x16_t vsubq_u8 (uint8x16_t, uint8x16_t)
+    uint16x8_t vsubq_u16 (uint16x8_t, uint16x8_t)
+    uint32x4_t vsubq_u32 (uint32x4_t, uint32x4_t)
+    uint64x2_t vsubq_u64 (uint64x2_t, uint64x2_t)
+
+    int8x16_t vsubq_s8 (int8x16_t, int8x16_t)
+    int16x8_t vsubq_s16 (int16x8_t, int16x8_t)
+    int32x4_t vsubq_s32 (int32x4_t, int32x4_t)
+    int64x2_t vsubq_s64 (int64x2_t, int64x2_t)
+
+    float32x4_t vsubq_f32 (float32x4_t, float32x4_t)
+}
+{//NOTE vsubl
+    uint16x8_t vsubl_u8 (uint8x8_t, uint8x8_t)
+    uint32x4_t vsubl_u16 (uint16x4_t, uint16x4_t)
+    uint64x2_t vsubl_u32 (uint32x2_t, uint32x2_t)
+
+    int16x8_t vsubl_s8 (int8x8_t, int8x8_t)
+    int32x4_t vsubl_s16 (int16x4_t, int16x4_t)
+    int64x2_t vsubl_s32 (int32x2_t, int32x2_t)                           
+}
+{//NOTE vsubw
+    uint16x8_t vsubw_u8 (uint16x8_t, uint8x8_t)
+    uint32x4_t vsubw_u16 (uint32x4_t, uint16x4_t)
+    uint64x2_t vsubw_u32 (uint64x2_t, uint32x2_t)
+
+    int16x8_t vsubw_s8 (int16x8_t, int8x8_t)
+    int32x4_t vsubw_s16 (int32x4_t, int16x4_t)
+    int64x2_t vsubw_s32 (int64x2_t, int32x2_t)
+}
+{//NOTE vhsub   64-bit vectors
+    uint8x8_t vhsub_u8 (uint8x8_t, uint8x8_t)
+    uint16x4_t vhsub_u16 (uint16x4_t, uint16x4_t)
+    uint32x2_t vhsub_u32 (uint32x2_t, uint32x2_t)
+
+    int8x8_t vhsub_s8 (int8x8_t, int8x8_t)
+    int16x4_t vhsub_s16 (int16x4_t, int16x4_t)
+    int32x2_t vhsub_s32 (int32x2_t, int32x2_t)
+}
+{//NOTE vhsub  128-bit vectors
+    uint8x16_t vhsubq_u8 (uint8x16_t, uint8x16_t)
+    uint16x8_t vhsubq_u16 (uint16x8_t, uint16x8_t)
+    uint32x4_t vhsubq_u32 (uint32x4_t, uint32x4_t)
+
+    int8x16_t vhsubq_s8 (int8x16_t, int8x16_t)
+    int16x8_t vhsubq_s16 (int16x8_t, int16x8_t)
+    int32x4_t vhsubq_s32 (int32x4_t, int32x4_t)
+}
+{//NOTE vrhsub  64-bit vectors
+    uint8x8_t vrhsub_u8 (uint8x8_t, uint8x8_t)
+    uint16x4_t vrhsub_u16 (uint16x4_t, uint16x4_t)
+    uint32x2_t vrhsub_u32 (uint32x2_t, uint32x2_t)
+
+    int8x8_t vrhsub_s8 (int8x8_t, int8x8_t)
+    int16x4_t vrhsub_s16 (int16x4_t, int16x4_t)
+    int32x2_t vrhsub_s32 (int32x2_t, int32x2_t)
+}
+{//NOTE vrhsub 128-bit vectors
+    uint8x16_t vrhsubq_u8 (uint8x16_t, uint8x16_t)
+    uint16x8_t vrhsubq_u16 (uint16x8_t, uint16x8_t)
+    uint32x4_t vrhsubq_u32 (uint32x4_t, uint32x4_t)
+
+    int8x16_t vrhsubq_s8 (int8x16_t, int8x16_t)
+    int16x8_t vrhsubq_s16 (int16x8_t, int16x8_t)
+    int32x4_t vrhsubq_s32 (int32x4_t, int32x4_t)
+}
+{//NOTE vqsub   64-bit vectors
+    uint8x8_t vqsub_u8 (uint8x8_t, uint8x8_t)
+    uint16x4_t vqsub_u16 (uint16x4_t, uint16x4_t)
+    uint32x2_t vqsub_u32 (uint32x2_t, uint32x2_t)
+    uint64x1_t vqsub_u64 (uint64x1_t, uint64x1_t)
+
+    int8x8_t vqsub_s8 (int8x8_t, int8x8_t)
+    int16x4_t vqsub_s16 (int16x4_t, int16x4_t)
+    int32x2_t vqsub_s32 (int32x2_t, int32x2_t)
+    int64x1_t vqsub_s64 (int64x1_t, int64x1_t)
+}
+{//NOTE vqsub  128-bit vectors
+    uint8x16_t vqsubq_u8 (uint8x16_t, uint8x16_t)
+    uint16x8_t vqsubq_u16 (uint16x8_t, uint16x8_t)
+    uint32x4_t vqsubq_u32 (uint32x4_t, uint32x4_t)
+    uint64x2_t vqsubq_u64 (uint64x2_t, uint64x2_t)
+
+    int8x16_t vqsubq_s8 (int8x16_t, int8x16_t)
+    int16x8_t vqsubq_s16 (int16x8_t, int16x8_t)
+    int32x4_t vqsubq_s32 (int32x4_t, int32x4_t)
+    int64x2_t vqsubq_s64 (int64x2_t, int64x2_t)
+}
+{//NOTE vsubhn
+    uint8x8_t vsubhn_u16 (uint16x8_t, uint16x8_t)
+    uint16x4_t vsubhn_u32 (uint32x4_t, uint32x4_t)
+    uint32x2_t vsubhn_u64 (uint64x2_t, uint64x2_t)
+
+    int32x2_t vsubhn_s64 (int64x2_t, int64x2_t)
+    int16x4_t vsubhn_s32 (int32x4_t, int32x4_t)
+    int8x8_t vsubhn_s16 (int16x8_t, int16x8_t)
+}
+{//NOTE vrsubhn
+    uint8x8_t vrsubhn_u16 (uint16x8_t, uint16x8_t)
+    uint16x4_t vrsubhn_u32 (uint32x4_t, uint32x4_t)
+    uint32x2_t vrsubhn_u64 (uint64x2_t, uint64x2_t)
+
+    int8x8_t vrsubhn_s16 (int16x8_t, int16x8_t)
+    int16x4_t vrsubhn_s32 (int32x4_t, int32x4_t)
+    int32x2_t vrsubhn_s64 (int64x2_t, int64x2_t)
+}
