@@ -1,0 +1,133 @@
+Arithmetic - DONE
+    _mm_add_pi8
+    _mm_add_pi16
+    _mm_add_pi32
+    _mm_adds_pi8
+    _mm_adds_pi16
+    _mm_adds_pu8
+    _mm_adds_pu16
+    _m_paddb
+    _m_paddw
+    _m_paddd
+    _m_paddsb
+    _m_paddsw
+    _m_paddusb
+    _m_paddusw
+    _mm_sub_pi8
+    _mm_sub_pi16
+    _mm_sub_pi32
+    _mm_subs_pi8
+    _mm_subs_pi16
+    _mm_subs_pu8
+    _mm_subs_pu16
+    _m_psubb
+    _m_psubw
+    _m_psubd
+    _m_psubsb
+    _m_psubsw
+    _m_psubusb
+    _m_psubusw
+    _mm_mulhi_pi16
+    _mm_mullo_pi16
+    _mm_madd_pi16
+    _m_pmulhw
+    _m_pmullw
+    _m_pmaddwd
+Compare - DONE
+    _mm_cmpeq_pi8
+    _mm_cmpeq_pi16
+    _mm_cmpeq_pi32
+    _mm_cmpgt_pi8
+    _mm_cmpgt_pi16
+    _mm_cmpgt_pi32
+    _m_pcmpeqb
+    _m_pcmpeqw
+    _m_pcmpeqd
+    _m_pcmpgtb
+    _m_pcmpgtw
+    _m_pcmpgtd
+Convert - DONE
+    _mm_cvtm64_si64
+    _mm_cvtsi64_si32
+    _mm_cvtsi64_m64
+    _mm_cvtsi32_si64
+    _m_from_int
+    _m_from_int64
+    _m_to_int
+    _m_to_int64
+Logical - DONE
+    _mm_and_si64
+    _mm_or_si64
+    _mm_xor_si64
+    _mm_andnot_si64
+    _m_pand
+    _m_por
+    _m_pxor
+    _m_pandn
+General Support - DONE
+    _mm_empty
+    _m_empty
+Miscellaneous - DONE
+    _mm_packs_pi16
+    _mm_packs_pi32
+    _mm_packs_pu16
+    _m_packssdw
+    _m_packsswb
+    _m_packuswb
+Set - DONE
+    _mm_set_pi8
+    _mm_set_pi16
+    _mm_set_pi32
+    _mm_set1_pi8
+    _mm_set1_pi16
+    _mm_set1_pi32
+    _mm_setr_pi8
+    _mm_setr_pi16
+    _mm_setr_pi32
+    _mm_setzero_si64
+Shift - DONE
+    _mm_sll_pi16 = ____mm_sll<__m64, int16_t>;
+    _mm_sll_pi32 = ____mm_sll<__m64, int32_t>;
+    _mm_sll_si64 = ____mm_sll<__m64, int64_t>;
+    _mm_slli_pi16 = ____mm_slli<__m64, int16_t>;
+    _mm_slli_pi32 = ____mm_slli<__m64, int32_t>;
+    _mm_slli_si64 = ____mm_slli<__m64, int64_t>;
+    _mm_srl_pi16 = ____mm_sll<__m64, int16_t>;
+    _mm_srl_pi32 = ____mm_sll<__m64, int32_t>;
+    _mm_srl_si64 = ____mm_sll<__m64, int64_t>;
+    _mm_srli_pi16 = ____mm_slli<__m64, int16_t>;
+    _mm_srli_pi32 = ____mm_slli<__m64, int32_t>;
+    _mm_srli_si64 = ____mm_slli<__m64, int64_t>;
+    _mm_sra_pi16 = ____mm_sra<__m64, int16_t>;
+    _mm_sra_pi32 = ____mm_sra<__m64, int32_t>;
+    _mm_srai_pi16 = ____mm_srai<__m64, int16_t>;
+    _mm_srai_pi32 = ____mm_srai<__m64, int32_t>;
+    _m_psllw = ____mm_sll<__m64, int16_t>;
+    _m_pslld = ____mm_sll<__m64, int32_t>;
+    _m_psllq = ____mm_sll<__m64, int64_t>;
+    _m_psllwi = ____mm_slli<__m64, int16_t>;
+    _m_pslldi = ____mm_slli<__m64, int32_t>;
+    _m_psllqi = ____mm_slli<__m64, int64_t>;
+    _m_psrlw = ____mm_sll<__m64, int16_t>;
+    _m_psrld = ____mm_sll<__m64, int32_t>;
+    _m_psrlq = ____mm_sll<__m64, int64_t>;
+    _m_psrliw = ____mm_slli<__m64, int16_t>;
+    _m_psrlid = ____mm_slli<__m64, int32_t>;
+    _m_psrliq = ____mm_slli<__m64, int64_t>;
+    _m_psraw = ____mm_sra<__m64, int16_t>;
+    _m_psrad = ____mm_sra<__m64, int32_t>;
+    _m_psraiw = ____mm_srai<__m64, int16_t>;
+    _m_psraid = ____mm_srai<__m64, int32_t>;
+Swizzle - DONE
+    _mm_unpackhi_pi8
+    _mm_unpackhi_pi16
+    _mm_unpackhi_pi32
+    _mm_unpacklo_pi8
+    _mm_unpacklo_pi16
+    _mm_unpacklo_pi32
+    _m_punpckhbw
+    _m_punpckhwd
+    _m_punpckhdq
+    _m_punpcklbw
+    _m_punpcklwd
+    _m_punpckldq
