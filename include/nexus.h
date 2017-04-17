@@ -28,7 +28,7 @@ namespace nexus {
     
 #ifdef NEXUS_X86_MMX
     
-    namespace x86_mmx {
+    namespace x86 {
         
         //Internal
         namespace {
@@ -43,10 +43,99 @@ namespace nexus {
             }
             
             template<typename T, typename E>
+            T ____mm_add_single(T v1, T v2) {
+                T result;
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    if(i == 0) {
+                        result.template at<E>(i) = v1.template at<E>(i) + v2.template at<E>(i);
+                    } else {
+                        result.template at<E>(i) = v1.template at<E>(i);
+                    }
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
             T ____mm_sub(T v1, T v2) {
                 T result;
                 for(size_t i = 0; i < T::length; i++) {
                     result.template at<E>(i) = v1.template at<E>(i) - v2.template at<E>(i);
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_sub_single(T v1, T v2) {
+                T result;
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    if(i == 0) {
+                        result.template at<E>(i) = v1.template at<E>(i) - v2.template at<E>(i);
+                    } else {
+                        result.template at<E>(i) = v1.template at<E>(i);
+                    }
+                }
+                return result;
+            }
+            
+            template<typename T, typename E, typename E_TMP>
+            T ____mm_sad_(T v1, T v2) {
+                T result;
+                std::memset(&result, 0, sizeof(result));
+                E_TMP tmp = 0;
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    E x = v1.template at<E>(i);
+                    E y = v2.template at<E>(i);
+                    E_TMP z = x - y;
+                    if(z < 0) {
+                        z *= -1;
+                    }
+                    tmp += z;
+                    std::cout << "x: " << (int)x << ",y: " << (int)y << ",tmp: " << tmp << std::endl;
+                }
+                result.template at<E_TMP>(0) = tmp;
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_mul(T v1, T v2) {
+                T result;
+                for(size_t i = 0; i < T::length; i++) {
+                    result.template at<E>(i) = v1.template at<E>(i) * v2.template at<E>(i);
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_mul_single(T v1, T v2) {
+                T result;
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    if(i == 0) {
+                        result.template at<E>(i) = v1.template at<E>(i) * v2.template at<E>(i);
+                    } else {
+                        result.template at<E>(i) = v1.template at<E>(i);
+                    }
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_div(T v1, T v2) {
+                T result;
+                for(size_t i = 0; i < T::length; i++) {
+                    result.template at<E>(i) = v1.template at<E>(i) / v2.template at<E>(i);
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_div_single(T v1, T v2) {
+                T result;
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    if(i == 0) {
+                        result.template at<E>(i) = v1.template at<E>(i) / v2.template at<E>(i);
+                    } else {
+                        result.template at<E>(i) = v1.template at<E>(i);
+                    }
                 }
                 return result;
             }
@@ -194,6 +283,7 @@ namespace nexus {
                 return result;
             }
             
+            
             template<typename T, typename E>
             T ____mm_cmpeq(T v1, T v2) {
                 T result;
@@ -212,6 +302,224 @@ namespace nexus {
                     target[i] = v1.template at<E>(i) > v1.template at<E>(i) ? std::numeric_limits<E>::max() : 0;
                 }
                 return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpge(T v1, T v2) {
+                T result;
+                E* target = reinterpret_cast<E*>(&result);
+                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    target[i] = v1.template at<E>(i) >= v1.template at<E>(i) ? std::numeric_limits<E>::max() : 0;
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmplt(T v1, T v2) {
+                T result;
+                E* target = reinterpret_cast<E*>(&result);
+                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    target[i] = v1.template at<E>(i) < v1.template at<E>(i) ? std::numeric_limits<E>::max() : 0;
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmple(T v1, T v2) {
+                T result;
+                E* target = reinterpret_cast<E*>(&result);
+                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    target[i] = v1.template at<E>(i) <= v1.template at<E>(i) ? std::numeric_limits<E>::max() : 0;
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpneq(T v1, T v2) {
+                T result;
+                E* target = reinterpret_cast<E*>(&result);
+                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    target[i] = v1.template at<E>(i) != v1.template at<E>(i) ? std::numeric_limits<E>::max() : 0;
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpngt(T v1, T v2) {
+                T result;
+                E* target = reinterpret_cast<E*>(&result);
+                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    target[i] = !(v1.template at<E>(i) > v1.template at<E>(i)) ? std::numeric_limits<E>::max() : 0;
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpnge(T v1, T v2) {
+                T result;
+                E* target = reinterpret_cast<E*>(&result);
+                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    target[i] = !(v1.template at<E>(i) >= v1.template at<E>(i)) ? std::numeric_limits<E>::max() : 0;
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpnlt(T v1, T v2) {
+                T result;
+                E* target = reinterpret_cast<E*>(&result);
+                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    target[i] = !(v1.template at<E>(i) < v1.template at<E>(i)) ? std::numeric_limits<E>::max() : 0;
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpnle(T v1, T v2) {
+                T result;
+                E* target = reinterpret_cast<E*>(&result);
+                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    target[i] = !(v1.template at<E>(i) <= v1.template at<E>(i)) ? std::numeric_limits<E>::max() : 0;
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpeq_single(T v1, T v2) {
+                T result = v1;
+                result.template at<E>(0) = v1.template at<E>(0) == v1.template at<E>(0) ? std::numeric_limits<E>::max() : 0;
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpgt_single(T v1, T v2) {
+                T result = v1;
+                result.template at<E>(0) = v1.template at<E>(0) > v1.template at<E>(0) ? std::numeric_limits<E>::max() : 0;
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpge_single(T v1, T v2) {
+                T result = v1;
+                result.template at<E>(0) = v1.template at<E>(0) >= v1.template at<E>(0) ? std::numeric_limits<E>::max() : 0;
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmplt_single(T v1, T v2) {
+                T result = v1;
+                result.template at<E>(0) = v1.template at<E>(0) < v1.template at<E>(0) ? std::numeric_limits<E>::max() : 0;
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmple_single(T v1, T v2) {
+                T result = v1;
+                result.template at<E>(0) = v1.template at<E>(0) <= v1.template at<E>(0) ? std::numeric_limits<E>::max() : 0;
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpneq_single(T v1, T v2) {
+                T result = v1;
+                result.template at<E>(0) = v1.template at<E>(0) != v1.template at<E>(0) ? std::numeric_limits<E>::max() : 0;
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpngt_single(T v1, T v2) {
+                T result = v1;
+                result.template at<E>(0) = !(v1.template at<E>(0) > v1.template at<E>(0)) ? std::numeric_limits<E>::max() : 0;
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpnge_single(T v1, T v2) {
+                T result = v1;
+                result.template at<E>(0) = !(v1.template at<E>(0) >= v1.template at<E>(0)) ? std::numeric_limits<E>::max() : 0;
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpnlt_single(T v1, T v2) {
+                T result = v1;
+                result.template at<E>(0) = !(v1.template at<E>(0) < v1.template at<E>(0)) ? std::numeric_limits<E>::max() : 0;
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpnle_single(T v1, T v2) {
+                T result = v1;
+                result.template at<E>(0) = !(v1.template at<E>(0) <= v1.template at<E>(0)) ? std::numeric_limits<E>::max() : 0;
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpord(T v1, T v2){
+                T result;
+                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    bool x = v1.template at<E>(i) == std::numeric_limits<float>::quiet_NaN();
+                    bool y = v1.template at<E>(i) == std::numeric_limits<float>::quiet_NaN();
+                    result.template at<E>(i) = ( x || y ) ? std::numeric_limits<E>::max() : 0;
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpunord(T v1, T v2){
+                T result;
+                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    bool x = v1.template at<E>(i) != std::numeric_limits<float>::quiet_NaN();
+                    bool y = v1.template at<E>(i) != std::numeric_limits<float>::quiet_NaN();
+                    result.template at<E>(i) = ( x || y ) ? std::numeric_limits<E>::max() : 0;
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpord_single(T v1, T v2){
+                T result = v1;
+                bool x = v1.template at<E>(0) == std::numeric_limits<E>::quiet_NaN();
+                bool y = v1.template at<E>(0) == std::numeric_limits<E>::quiet_NaN();
+                result.template at<E>(0) = ( x || y ) ? std::numeric_limits<E>::max() : 0;
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_cmpunord_single(T v1, T v2){
+                T result = v1;
+                bool x = v1.template at<E>(0) != std::numeric_limits<E>::quiet_NaN();
+                bool y = v1.template at<E>(0) != std::numeric_limits<E>::quiet_NaN();
+                result.template at<E>(0) = ( x || y ) ? std::numeric_limits<E>::max() : 0;
+                return result;
+            }
+            
+            
+            template<typename T, typename E, typename = typename std::enable_if<sizeof(T) >= sizeof(E)>::type>
+            int32_t ____mm_comieq_ss(T v1, T v2) {
+                return v1.template at<E>(0) == v2.template at<E>(0) ? 1 : 0;
+            }
+            
+            template<typename T, typename E, typename = typename std::enable_if<sizeof(T) >= sizeof(E)>::type>
+            int32_t ____mm_comineq_ss(T v1, T v2) {
+                return v1.template at<E>(0) != v2.template at<E>(0) ? 1 : 0;
+            }
+            
+            template<typename T, typename E, typename = typename std::enable_if<sizeof(T) >= sizeof(E)>::type>
+            int32_t ____mm_comigt_ss(T v1, T v2) {
+                return v1.template at<E>(0) > v2.template at<E>(0) ? 1 : 0;
+            }
+            template<typename T, typename E, typename = typename std::enable_if<sizeof(T) >= sizeof(E)>::type>
+            int32_t ____mm_comige_ss(T v1, T v2) {
+                return v1.template at<E>(0) >= v2.template at<E>(0) ? 1 : 0;
+            }
+            template<typename T, typename E, typename = typename std::enable_if<sizeof(T) >= sizeof(E)>::type>
+            int32_t ____mm_comilt_ss(T v1, T v2) {
+                return v1.template at<E>(0) < v2.template at<E>(0) ? 1 : 0;
+            }
+            template<typename T, typename E, typename = typename std::enable_if<sizeof(T) >= sizeof(E)>::type>
+            int32_t ____mm_comile_ss(T v1, T v2) {
+                return v1.template at<E>(0) <= v2.template at<E>(0) ? 1 : 0;
             }
             
             template<typename T>
@@ -400,7 +708,11 @@ namespace nexus {
         }
         
         using __int64 = int64_t;
-        using __m64 = vector<int8_t, 8>;
+        using __m64 = vector<uint8_t, 8>;
+        using __m128 = vector<uint8_t,16>;
+        
+        namespace mmx {
+        
         
         const auto& _mm_sll_pi16 = ____mm_sll<__m64, int16_t>;
         const auto& _mm_sll_pi32 = ____mm_sll<__m64, int32_t>;
@@ -568,9 +880,69 @@ namespace nexus {
         const auto& _mm_empty = ____mm_noop<>;
         const auto& _m_empty = _mm_empty;
         
+        }
+        
+        namespace sse {
+            const auto& __mm_add_ps = ____mm_add<__m128, float>;
+            const auto& __mm_add_ss = ____mm_add_single<__m128, float>;
+            const auto& __mm_sub_ps = ____mm_sub<__m128, float>;
+            const auto& __mm_sub_ss = ____mm_sub_single<__m128, float>;
+            const auto& __mm_sad_pu8 = ____mm_sad_<__m64, uint8_t, int16_t>;
+            const auto& _m_psadbw = __mm_sad_pu8;
+            const auto& __mm_mul_ps = ____mm_mul<__m128, float>;
+            const auto& __mm_mul_ss = ____mm_mul_single<__m128, float>;
+            const auto& __mm_mulhi_pu16 = ____mm_mulhi<__m64, uint16_t, uint32_t>;
+            const auto& _m_pmulhuw = __mm_mulhi_pu16;
+            const auto& __mm_div_ps = ____mm_div<__m128, float>;
+            const auto& __mm_div_ss = ____mm_div_single<__m128, float>;
+            
+            const auto& __mm_cmpeq_ps = ____mm_cmpeq<__m128, float>;
+            const auto& __mm_cmpgt_ps = ____mm_cmpgt<__m128, float>;
+            const auto& __mm_cmpge_ps = ____mm_cmpge<__m128, float>;
+            const auto& __mm_cmplt_ps = ____mm_cmplt<__m128, float>;
+            const auto& __mm_cmple_ps = ____mm_cmple<__m128, float>;
+            const auto& __mm_cmpneq_ps = ____mm_cmpeq<__m128, float>;
+            const auto& __mm_cmpngt_ps = ____mm_cmpgt<__m128, float>;
+            const auto& __mm_cmpnge_ps = ____mm_cmpge<__m128, float>;
+            const auto& __mm_cmpnlt_ps = ____mm_cmplt<__m128, float>;
+            const auto& __mm_cmpnle_ps = ____mm_cmple<__m128, float>;
+            const auto& __mm_cmpeq_ss = ____mm_cmpeq_single<__m128, float>;
+            const auto& __mm_cmpgt_ss = ____mm_cmpgt_single<__m128, float>;
+            const auto& __mm_cmpge_ss = ____mm_cmpge_single<__m128, float>;
+            const auto& __mm_cmplt_ss = ____mm_cmplt_single<__m128, float>;
+            const auto& __mm_cmple_ss = ____mm_cmple_single<__m128, float>;
+            const auto& __mm_cmpneq_ss = ____mm_cmpeq_single<__m128, float>;
+            const auto& __mm_cmpngt_ss = ____mm_cmpgt_single<__m128, float>;
+            const auto& __mm_cmpnge_ss = ____mm_cmpge_single<__m128, float>;
+            const auto& __mm_cmpnlt_ss = ____mm_cmplt_single<__m128, float>;
+            const auto& __mm_cmpnle_ss = ____mm_cmple_single<__m128, float>;
+            const auto& __mm_cmpord_ps = ____mm_cmpord<__m128, float>;
+            const auto& __mm_cmpunord_ps = ____mm_cmpunord<__m128, float>;
+            const auto& __mm_cmpord_ss = ____mm_cmpord_single<__m128, float>;
+            const auto& __mm_cmpunord_ss = ____mm_cmpunord_single<__m128, float>;
+            const auto& __mm_comieq_ss  = ____mm_comieq_ss<__m128, float>;
+            const auto& __mm_comineq_ss = ____mm_comineq_ss<__m128, float>;
+            const auto& __mm_comigt_ss  = ____mm_comigt_ss<__m128, float>;
+            const auto& __mm_comige_ss  = ____mm_comige_ss<__m128, float>;
+            const auto& __mm_comilt_ss  = ____mm_comilt_ss<__m128, float>;
+            const auto& __mm_comile_ss  = ____mm_comile_ss<__m128, float>;
+            const auto& __mm_ucomieq_ss  = __mm_comieq_ss;
+            const auto& __mm_ucomineq_ss = __mm_comineq_ss;
+            const auto& __mm_ucomigt_ss  = __mm_comigt_ss;
+            const auto& __mm_ucomige_ss  = __mm_comige_ss;
+            const auto& __mm_ucomilt_ss  = __mm_comilt_ss;
+            const auto& __mm_ucomile_ss  = __mm_comile_ss;
+            
+        }
+        
+        
     }
     
-    using namespace x86_mmx;
+    using x86::__int64;
+    using x86::__m64;
+    using x86::__m128;
+    using namespace x86::mmx;
+    using namespace x86::sse;
     
 #endif
     
