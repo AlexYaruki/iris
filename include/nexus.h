@@ -2,8 +2,10 @@
 #define NEXUS_H
 
 #include <cstdint>
+#include <cmath>
 #include <limits>
 #include <utility>
+
 
 namespace nexus {
     
@@ -705,6 +707,78 @@ namespace nexus {
                 
             }
             
+            template<typename T, typename E>
+            T ____mm_rcp(T v) {
+                T result;
+                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    result.template at<E>(i) = static_cast<E>(1.0)/v.template at<E>(i);
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_rcp_single(T v) {
+                T result = v;
+                result.template at<E>(0) = static_cast<E>(1.0)/v.template at<E>(0);
+                return result;
+            }
+            template<typename T, typename E>
+            T ____mm_rsqrt(T v) {
+                T result;
+                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    result.template at<E>(i) = static_cast<E>(1.0)/std::sqrt(v.template at<E>(i));
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_rsqrt_single(T v) {
+                T result = v;
+                result.template at<E>(0) = static_cast<E>(1.0)/std::sqrt(v.template at<E>(0));
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_sqrt(T v) {
+                T result;
+                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    result.template at<E>(i) = std::sqrt(v.template at<E>(i));
+                }
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_sqrt_single(T v) {
+                T result = v;
+                result.template at<E>(0) = std::sqrt(v.template at<E>(0));
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_load(E* source) {
+                T result;
+                std::memcpy(&result, source, sizeof(T));
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_load_single(E* source) {
+                T result;
+                std::memset(&result, 0, sizeof(T));
+                result.template at<E>(0) = *source;
+                std::memcpy(&result, source, sizeof(E));
+                return result;
+            }
+            
+            template<typename T, typename E>
+            T ____mm_load_single_all(E const * source) {
+                T result;
+                E e = *source;
+                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                    result.template at<E>(i) = e;
+                }
+                return result;
+            }
         }
         
         using __int64 = int64_t;
@@ -933,6 +1007,17 @@ namespace nexus {
             const auto& __mm_ucomilt_ss  = __mm_comilt_ss;
             const auto& __mm_ucomile_ss  = __mm_comile_ss;
             
+            const auto& __mm_rcp_ps = ____mm_rcp<__m128, float>;
+            const auto& __mm_rcp_ss = ____mm_rcp_single<__m128, float>;
+            const auto& __mm_rsqrt_ps = ____mm_rcp<__m128, float>;
+            const auto& __mm_rsqrt_ss = ____mm_rcp_single<__m128, float>;
+            const auto& __mm_sqrt_ps = ____mm_rcp<__m128, float>;
+            const auto& __mm_sqrt_ss = ____mm_rcp_single<__m128, float>;
+            
+            const auto& __mm_load_ps = ____mm_load<__m128,float>;
+            const auto& __mm_load_ss = ____mm_load_single<__m128,float>;
+            const auto& __mm_load_ps1 = ____mm_load_single_all<__m128,float>;
+            const auto& __mm_load1_ps = __mm_load_ps1;
         }
         
         
