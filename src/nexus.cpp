@@ -3,7 +3,7 @@
 
 #define NEXUS_X86_MMX
 #define NEXUS_ARM_NEON
-
+#define NEXUS_ARM_NEON_EXPANSION
 #include "nexus.h"
 
 using namespace nexus;

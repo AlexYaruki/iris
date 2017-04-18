@@ -1053,6 +1053,14 @@ namespace nexus {
         T __vdup_lane(T v, size_t i) {
             return __vdup<T,E>(__vget_lane<T,E>(v,i));
         }
+        
+        template<typename T, typename E>
+        T __vld(E* src) {
+            T result;
+            std::memcpy(&result, src, sizeof(T));
+            return result;
+        }
+        
         template<typename T, typename R>
         R __vceq(T v1, T v2) {
             R result;
@@ -1128,6 +1136,100 @@ namespace nexus {
         using uint64x2_t = vector<uint64_t,2>;
         
         using float32x4_t = vector<float,4>;
+        
+#ifdef NEXUS_ARM_NEON_EXPANSION
+      
+        namespace expansion {
+        
+        // ARM NEON - Types - 256-bit
+        
+        using int8x32_t  = vector<int8_t,32>;
+        using int16x16_t = vector<int16_t,16>;
+        using int32x8_t  = vector<int32_t,8>;
+        using int64x4_t  = vector<int64_t,4>;
+        
+        using uint8x32_t  = vector<uint8_t,32>;
+        using uint16x16_t = vector<uint16_t,16>;
+        using uint32x8_t = vector<uint32_t,8>;
+        using uint64x4_t  = vector<uint64_t,4>;
+        
+        using float32x8_t = vector<float,8>;
+        
+        // ARM NEON - Types - 512-bit
+        
+        using int8x64_t = vector<int8_t,64>;
+        using int16x32_t = vector<int16_t,32>;
+        using int32x16_t = vector<int32_t,16>;
+        using int64x8_t = vector<int64_t,8>;
+        
+        using uint8x64_t  = vector<uint8_t,64>;
+        using uint16x32_t = vector<uint16_t,32>;
+        using uint32x16_t  = vector<uint32_t,16>;
+        using uint64x8_t  = vector<uint64_t,8>;
+        
+        using float32x16_t = vector<float,16>;
+        
+        // ARM NEON - Types - 1024-bit
+        
+        using int8x128_t = vector<int8_t,128>;
+        using int16x64_t = vector<int16_t,64>;
+        using int32x32_t = vector<int32_t,32>;
+        using int64x16_t = vector<int64_t,16>;
+        
+        using uint8x128_t  = vector<uint8_t,128>;
+        using uint16x64_t = vector<uint16_t,64>;
+        using uint32x32_t  = vector<uint32_t,32>;
+        using uint64x16_t  = vector<uint64_t,16>;
+        
+        using float32x32_t = vector<float,32>;
+        
+        // ARM NEON - Types - 2048-bit
+        
+        using int8x256_t = vector<int8_t,256>;
+        using int16x128_t = vector<int16_t,128>;
+        using int32x64_t = vector<int32_t,64>;
+        using int64x32_t = vector<int64_t,32>;
+        
+        using uint8x256_t  = vector<uint8_t,256>;
+        using uint16x128_t = vector<uint16_t,128>;
+        using uint32x64_t  = vector<uint32_t,64>;
+        using uint64x32_t  = vector<uint64_t,32>;
+        
+        using float32x64_t = vector<float,64>;
+        
+        }
+        
+        using namespace expansion;
+        
+#endif
+        
+        // ARM NEON - vld1 - 64-bit vector //////////////////////////////////////////
+        const auto& vld1_u8  = __vld<uint8x8_t, uint8_t>;
+        const auto& vld1_u16 = __vld<uint16x4_t,uint16_t>;
+        const auto& vld1_u32 = __vld<uint32x2_t,uint32_t>;
+        const auto& vld1_u64 = __vld<uint64x1_t,uint64_t>;
+        
+        const auto& vld1_s8  = __vld<int8x8_t, int8_t>;
+        const auto& vld1_s16 = __vld<int16x4_t,int16_t>;
+        const auto& vld1_s32 = __vld<int32x2_t,int32_t>;
+        const auto& vld1_s64 = __vld<int64x1_t,int64_t>;
+        
+        const auto& vld1_f32 = __vld<float32x2_t, float>;
+        /////////////////////////////////////////////////////////////////////////////
+        
+        // ARM NEON - vld1 - 128-bit vector //////////////////////////////////////////
+        const auto& vld1q_u8  = __vld<uint8x16_t, uint8_t>;
+        const auto& vld1q_u16 = __vld<uint16x8_t,uint16_t>;
+        const auto& vld1q_u32 = __vld<uint32x4_t,uint32_t>;
+        const auto& vld1q_u64 = __vld<uint64x2_t,uint64_t>;
+        
+        const auto& vld1q_s8  = __vld<int8x16_t, int8_t>;
+        const auto& vld1q_s16 = __vld<int16x8_t,int16_t>;
+        const auto& vld1q_s32 = __vld<int32x4_t,int32_t>;
+        const auto& vld1q_s64 = __vld<int64x2_t,int64_t>;
+        
+        const auto& vld1q_f32 = __vld<float32x4_t, float>;
+        /////////////////////////////////////////////////////////////////////////////
         
         // ARM NEON - vdup/vmov - 64-bit vector ///////////////////////////////////
         const auto& vdup_n_s8  = __vdup<int8x8_t ,int8_t >;
