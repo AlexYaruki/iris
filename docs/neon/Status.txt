@@ -18,22 +18,10 @@ Arithmetic - Subtraction:
     - vrsubhn
 Arithmetic - Multiply:
     - vmul
-    - vmla
-    - vmlal
-    - vmls
-    - vmlsl
     - vqdmulh
     - vqrdmulh
-    - vqdmlal
-    - vqdmlsl
     - vmull
     - vqdmull
-    - vmla_lane
-    - vmlal_lane
-    - vqdmlal_lane
-    - vmls_lane
-    - vmlsl_lane
-    - vqdmlsl_lane
     - vmul_n
     - vmull_n
     - vmull_n_lane
@@ -43,9 +31,23 @@ Arithmetic - Multiply:
     - vqdmulh_lane
     - vqrdmulh_n
     - vqrdmulh_lane
+Arithmetic - Multiply-accumulate
+    - vmla
+    - vmlal
+    - vqdmlal
+    - vmla_lane
+    - vmlal_lane
+    - vqdmlal_lane
     - vmla_lane
     - vmlal_n
     - vqdmlal_n
+Arithmetic - Multiply-subtract
+    - vmls
+    - vmlsl
+    - vqdmlsl
+    - vmls_lane
+    - vmlsl_lane
+    - vqdmlsl_lane
     - vmlsl_n
     - vqdmlsl_n
 Data processing:

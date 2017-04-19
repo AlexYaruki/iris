@@ -1082,20 +1082,29 @@ namespace nexus {
             return result;
         }
         
-        template<typename T>
-        T __vsub(T v1, T v2) {
-            T result;
-            for(size_t i = 0; i < T::length; i++) {
-                result.template at<typename T::elementType>(i) = v1.template at<typename T::elementType>(i) - v2.template at<typename T::elementType>(i);
-            }
-            return result;
-        }
-        
         template<typename T, typename R>
         R __vaddl(T v1, T v2) {
             R result;
             for(size_t i = 0; i < T::length; i++) {
                 result.template at<typename R::elementType>(i) = (typename R::elementType)v1.template at<typename T::elementType>(i) + v2.template at<typename T::elementType>(i);
+            }
+            return result;
+        }
+        
+        template<typename T, typename R>
+        R __vaddw(R v1, T v2) {
+            R result;
+            for(size_t i = 0; i < T::length; i++) {
+                result.template at<typename R::elementType>(i) = v1.template at<typename R::elementType>(i) + v2.template at<typename T::elementType>(i);
+            }
+            return result;
+        }
+        
+        template<typename T>
+        T __vsub(T v1, T v2) {
+            T result;
+            for(size_t i = 0; i < T::length; i++) {
+                result.template at<typename T::elementType>(i) = v1.template at<typename T::elementType>(i) - v2.template at<typename T::elementType>(i);
             }
             return result;
         }
@@ -1375,6 +1384,17 @@ namespace nexus {
         const auto& vaddl_u16 = __vaddl<uint16x4_t,uint32x4_t>;
         const auto& vaddl_u32 = __vaddl<uint32x2_t,uint64x2_t>;
         ///////////////////////////////////////////////////////////////////////////
+        
+        
+        // ARM NEON - vaddw ///////////////////////////////////////////////////////
+        const auto& vaddw_u8  = __vaddw<uint16x8_t, uint8x8_t>;
+        const auto& vaddw_u16 = __vaddw<uint32x4_t, uint16x4_t>;
+        const auto& vaddw_u32 = __vaddw<uint64x2_t, uint32x2_t>;
+        const auto& vaddw_s8  = __vaddw<int16x8_t, int8x8_t>;
+        const auto& vaddw_s16 = __vaddw<int32x4_t, int16x4_t>;
+        const auto& vaddw_s32 = __vaddw<int64x2_t, int32x2_t>;
+        ///////////////////////////////////////////////////////////////////////////
+        
         
         // ARM NEON - vsub - 64-bit vectors ///////////////////////////////////////
         const auto& vsub_u8  = __vsub< uint8x8_t>;
