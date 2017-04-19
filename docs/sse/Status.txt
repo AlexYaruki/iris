@@ -1,0 +1,68 @@
+Arithmetic - DONE
+    __mm_add_ps
+    __mm_add_ss
+    __mm_sub_ps
+    __mm_sub_ss
+    __mm_sad_pu8
+    _m_psadbw
+    __mm_mul_ps
+    __mm_mul_ss
+    __mm_mulhi_pu16
+    _m_pmulhuw
+    __mm_div_ps
+    __mm_div_ss
+Compare - DONE
+    __mm_cmpeq_ps
+    __mm_cmpgt_ps
+    __mm_cmpge_ps
+    __mm_cmplt_ps
+    __mm_cmple_ps
+    __mm_cmpneq_ps
+    __mm_cmpngt_ps
+    __mm_cmpnge_ps
+    __mm_cmpnlt_ps
+    __mm_cmpnle_ps
+    __mm_cmpeq_ss
+    __mm_cmpgt_ss
+    __mm_cmpge_ss
+    __mm_cmplt_ss
+    __mm_cmple_ss
+    __mm_cmpneq_ss
+    __mm_cmpngt_ss
+    __mm_cmpnge_ss
+    __mm_cmpnlt_ss
+    __mm_cmpnle_ss
+    __mm_cmpord_ps
+    __mm_cmpunord_ps
+    __mm_cmpord_ss
+    __mm_cmpunord_ss
+    __mm_comieq_ss
+    __mm_comineq_ss
+    __mm_comigt_ss
+    __mm_comige_ss
+    __mm_comilt_ss
+    __mm_comile_ss
+    __mm_ucomieq_ss
+    __mm_ucomineq_ss
+    __mm_ucomigt_ss
+    __mm_ucomige_ss
+    __mm_ucomilt_ss
+    __mm_ucomile_ss
+Convert
+Elementary Math Functions - DONE
+    __mm_rcp_ps
+    __mm_rcp_ss
+    __mm_rsqrt_ps
+    __mm_rsqrt_ss
+    __mm_sqrt_ps
+    __mm_sqrt_ss
+General Support
+Load
+Logical
+Miscellaneous
+Move
+Portability/Statistics
+Set
+Special Math Functions
+Store
+Swizzle
