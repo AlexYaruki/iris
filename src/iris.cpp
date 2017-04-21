@@ -1,12 +1,12 @@
 #include <iostream>
 #include <cstdint>
 
-#define NEXUS_X86_MMX
-#define NEXUS_ARM_NEON
-#define NEXUS_ARM_NEON_EXPANSION
-#include "nexus.h"
+#define IRIS_X86_MMX
+#define IRIS_ARM_NEON
+#define IRIS_ARM_NEON_EXPANSION
+#include "iris.h"
 
-using namespace nexus;
+using namespace iris;
 
 int main() {
     auto x = _mm_set1_pi8(3);

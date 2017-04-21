@@ -1,5 +1,5 @@
-#ifndef NEXUS_H
-#define NEXUS_H
+#ifndef IRIS_H
+#define IRIS_H
 
 #include <cstdint>
 #include <cmath>
@@ -7,8 +7,7 @@
 #include <utility>
 #include <cstring>
 
-namespace nexus {
-
+namespace iris {
 
     // Core
     namespace {
@@ -28,7 +27,7 @@ namespace nexus {
 
     }
 
-#ifdef NEXUS_X86_MMX
+#ifdef IRIS_X86_MMX
 
     namespace x86 {
 
@@ -776,8 +775,9 @@ namespace nexus {
                 return result;
             }
         }
-
+#if !defined(_MSC_VER)
         using __int64 = int64_t;
+#endif
         using __m64 = vector<uint8_t, 8>;
         using __m128 = vector<uint8_t,16>;
 
@@ -1019,7 +1019,9 @@ namespace nexus {
 
     }
 
+#if !defined(_MSC_VER)
     using x86::__int64;
+#endif
     using x86::__m64;
     using x86::__m128;
     using namespace x86::mmx;
@@ -1027,7 +1029,7 @@ namespace nexus {
 
 #endif
 
-#ifdef NEXUS_ARM_NEON
+#ifdef IRIS_ARM_NEON
 
     namespace arm_neon {
 
@@ -1242,12 +1244,12 @@ namespace nexus {
             }
             return result;
         }
-        
+
         template<typename T>
         T __vmla(T v1, T v2, T v3) {
             return __vadd(v3, __vmul(v1, v2));
         }
-        
+
 
         // ARM NEON - Types - 64-bit
 
@@ -1277,7 +1279,7 @@ namespace nexus {
 
         using float32x4_t = vector<float,4>;
 
-#ifdef NEXUS_ARM_NEON_EXPANSION
+#ifdef IRIS_ARM_NEON_EXPANSION
 
         namespace expansion {
 
@@ -1676,31 +1678,31 @@ namespace nexus {
         const auto& vmull_u16 = __vmull<uint16x4_t,uint32x4_t>;
         const auto& vmull_u32 = __vmull<uint32x2_t,uint64x2_t>;
         ///////////////////////////////////////////////////////////////////////////
-        
+
         // ARM NEON - vmla - 64-bit vector ///////////////////////////////////////////////////////
         const auto& vmla_s8  = __vmla< int8x8_t>;
         const auto& vmla_s16 = __vmla<int16x4_t>;
         const auto& vmla_s32 = __vmla<int32x2_t>;
-        
+
         const auto& vmla_u8  = __vmla<uint8x8_t>;
         const auto& vmla_u16 = __vmla<uint16x4_t>;
         const auto& vmla_u32 = __vmla<uint32x2_t>;
-        
+
         const auto& vmla_f32 = __vmla<float32x2_t>;
         ///////////////////////////////////////////////////////////////////////////
-        
+
         // ARM NEON - vmla - 128-bit vector ///////////////////////////////////////////////////////
         const auto& vmlaq_s8  = __vmla<int8x16_t>;
         const auto& vmlaq_s16 = __vmla<int16x8_t>;
         const auto& vmlaq_s32 = __vmla<int32x4_t>;
-        
+
         const auto& vmlaq_u8  = __vmla<uint8x16_t>;
         const auto& vmlaq_u16 = __vmla<uint16x8_t>;
         const auto& vmlaq_u32 = __vmla<uint32x4_t>;
-        
+
         const auto& vmlaq_f32 = __vmla<float32x4_t>;
         ///////////////////////////////////////////////////////////////////////////
-        
+
         // ARM NEON - vceq - 64-bit vectors ///////////////////////////////////////
         const auto& vceq_u8  = __vceq<   uint8x8_t,  uint8x8_t>;
         const auto& vceq_u16 = __vceq<  uint16x4_t, uint16x4_t>;
