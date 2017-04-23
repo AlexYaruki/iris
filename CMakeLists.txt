@@ -1,7 +1,17 @@
 cmake_minimum_required(VERSION 3.5)
 project(iris)
-
+enable_testing()
 set(SRCS src/iris.cpp include/iris.h)
 include_directories(include)
 set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -std=c++1z)
 add_executable(${PROJECT_NAME} ${SRCS})
+
+file(GLOB_RECURSE ARM_NEON_TESTS ${PROJECT_SOURCE_DIR}/src_tests/arm_neon/*.cpp)
+foreach(TEST_SOURCE ${ARM_NEON_TESTS})
+    get_filename_component(TEST_NAME ${TEST_SOURCE} NAME_WE)
+    set(TEST_NAME "arm_${TEST_NAME}")
+    message(STATUS "${testFile}")
+    add_executable(${TEST_NAME} ${TEST_SOURCE})
+    target_compile_definitions(${TEST_NAME} PUBLIC IRIS_ARM_NEON=1)
+    add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
+endforeach()
