@@ -1,0 +1,35 @@
+{//NOTE vmls 64-bit vectors
+    uint8x8_t vmls_u8 (uint8x8_t, uint8x8_t, uint8x8_t)
+    uint16x4_t vmls_u16 (uint16x4_t, uint16x4_t, uint16x4_t)
+    uint32x2_t vmls_u32 (uint32x2_t, uint32x2_t, uint32x2_t)
+
+    int8x8_t vmls_s8 (int8x8_t, int8x8_t, int8x8_t)
+    int16x4_t vmls_s16 (int16x4_t, int16x4_t, int16x4_t)
+    int32x2_t vmls_s32 (int32x2_t, int32x2_t, int32x2_t)
+
+    float32x2_t vmls_f32 (float32x2_t, float32x2_t, float32x2_t)
+}
+{//NOTE vmls 128-bit vectors
+    uint8x16_t vmlsq_u8 (uint8x16_t, uint8x16_t, uint8x16_t)
+    uint16x8_t vmlsq_u16 (uint16x8_t, uint16x8_t, uint16x8_t)
+    uint32x4_t vmlsq_u32 (uint32x4_t, uint32x4_t, uint32x4_t)
+
+    int8x16_t vmlsq_s8 (int8x16_t, int8x16_t, int8x16_t)
+    int16x8_t vmlsq_s16 (int16x8_t, int16x8_t, int16x8_t)
+    int32x4_t vmlsq_s32 (int32x4_t, int32x4_t, int32x4_t)
+
+    float32x4_t vmlsq_f32 (float32x4_t, float32x4_t, float32x4_t)
+}
+{//NOTE vmls
+    uint16x8_t vmlsl_u8 (uint16x8_t, uint8x8_t, uint8x8_t)
+    uint32x4_t vmlsl_u16 (uint32x4_t, uint16x4_t, uint16x4_t)
+    uint64x2_t vmlsl_u32 (uint64x2_t, uint32x2_t, uint32x2_t)
+
+    int16x8_t vmlsl_s8 (int16x8_t, int8x8_t, int8x8_t)
+    int32x4_t vmlsl_s16 (int32x4_t, int16x4_t, int16x4_t)
+    int64x2_t vmlsl_s32 (int64x2_t, int32x2_t, int32x2_t)
+}
+{
+    int64x2_t vqdmlsl_s32 (int64x2_t, int32x2_t, int32x2_t)
+    int32x4_t vqdmlsl_s16 (int32x4_t, int16x4_t, int16x4_t)
+}

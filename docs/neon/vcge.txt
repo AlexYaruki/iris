@@ -1,0 +1,22 @@
+{//NOTE vcge 64-bit vectors
+    uint8x8_t  vcge_s8 (int8x8_t, int8x8_t)                              //DONE
+    uint16x4_t vcge_s16 (int16x4_t, int16x4_t)                           //DONE
+    uint32x2_t vcge_s32 (int32x2_t, int32x2_t)                           //DONE
+
+    uint8x8_t  vcge_u8 (uint8x8_t, uint8x8_t)                            //DONE
+    uint16x4_t vcge_u16 (uint16x4_t, uint16x4_t)                         //DONE
+    uint32x2_t vcge_u32 (uint32x2_t, uint32x2_t)                         //DONE
+
+    uint32x2_t vcge_f32 (float32x2_t, float32x2_t)                       //DONE
+}
+{//NOTE vcge 128-bit vectors
+    uint8x16_t vcgeq_s8 (int8x16_t, int8x16_t)                           //DONE
+    uint16x8_t vcgeq_s16 (int16x8_t, int16x8_t)                          //DONE
+    uint32x4_t vcgeq_s32 (int32x4_t, int32x4_t)                          //DONE
+
+    uint8x16_t vcgeq_u8 (uint8x16_t, uint8x16_t)                         //DONE
+    uint16x8_t vcgeq_u16 (uint16x8_t, uint16x8_t)                        //DONE
+    uint32x4_t vcgeq_u32 (uint32x4_t, uint32x4_t)                        //DONE
+
+    uint32x4_t vcgeq_f32 (float32x4_t, float32x4_t)                      //DONE
+}

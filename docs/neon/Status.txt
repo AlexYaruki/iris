@@ -18,9 +18,9 @@ Arithmetic - Subtraction:
     - vrsubhn
 Arithmetic - Multiply:
     - vmul
+    - vmull
     - vqdmulh
     - vqrdmulh
-    - vmull
     - vqdmull
     - vmul_n
     - vmull_n
@@ -79,10 +79,10 @@ Data processing:
     - vqmovun
 Logical and comparison:
     - vceq                                                               //DONE
-    - vcge
-    - vcle
-    - vcgt
-    - vclt
+    - vcge                                                               //DONE
+    - vcle                                                               //DONE
+    - vcgt                                                               //DONE
+    - vclt                                                               //DONE
     - vcage
     - vcale
     - vcagt

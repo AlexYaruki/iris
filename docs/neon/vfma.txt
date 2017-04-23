@@ -1,0 +1,6 @@
+{//NOTE vfma 64-bit vectors
+    float32x2_t vfma_f32 (float32x2_t, float32x2_t, float32x2_t)
+}
+{//NOTE vfma 128-bit vectors
+    float32x4_t vfmaq_f32 (float32x4_t, float32x4_t, float32x4_t) 
+}

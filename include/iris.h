@@ -1059,6 +1059,8 @@ namespace iris {
             return result;
         }
 
+		// ARM NEON - Comparision ///////////////////////////////////////////////////
+
         template<typename T, typename R>
         R __vceq(T v1, T v2) {
             R result;
@@ -1119,6 +1121,34 @@ namespace iris {
             }
         }
 
+		/*
+		
+		vcagt
+		vcage
+		vcalt
+		vcale
+		vtst
+
+		*/
+
+		/////////////////////////////////////////////////////////////////////////////
+
+		// ARM NEON - Bitwise ///////////////////////////////////////////////////////
+
+		/*
+		
+		vmvn
+		vand
+		vorr
+		veor
+		vbic
+		vbsl
+
+		*/
+
+		/////////////////////////////////////////////////////////////////////////////
+
+		// ARM NEON - Addition //////////////////////////////////////////////////////
         template<typename T>
         T __vadd(T v1, T v2) {
             T result;
@@ -1155,7 +1185,7 @@ namespace iris {
             }
             return result;
         }
-
+		
         template<typename T>
         T __vqadd(T v1, T v2) {
             T result;
@@ -1173,6 +1203,13 @@ namespace iris {
             return result;
         }
 
+		// vraddhn
+		// vaddhn
+		// vrhadd
+
+		/////////////////////////////////////////////////////////////////////////////
+
+		// ARM NEON - Subtraction ///////////////////////////////////////////////////
         template<typename T>
         T __vsub(T v1, T v2) {
             T result;
@@ -1227,6 +1264,14 @@ namespace iris {
             return result;
         }
 
+		// vrsubhn
+		// vsubhn
+		// vrhsub
+
+		/////////////////////////////////////////////////////////////////////////////
+
+		// ARM NEON - Multiplication ////////////////////////////////////////////////
+
         template<typename T>
         T __vmul(T v1, T v2) {
             T result;
@@ -1245,11 +1290,23 @@ namespace iris {
             return result;
         }
 
+		// ARM NEON - Multiplication-Accumulate /////////////////////////////////////
+
         template<typename T>
         T __vmla(T v1, T v2, T v3) {
             return __vadd(v3, __vmul(v1, v2));
         }
 
+		/////////////////////////////////////////////////////////////////////////////
+
+		// ARM NEON - Multiplication-Subtract ///////////////////////////////////////
+
+		template<typename T>
+		T __vmls(T v1, T v2, T v3) {
+			return __vsub(v3, __vmul(v1, v2));
+		}
+
+		/////////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - Types - 64-bit
 
@@ -1645,12 +1702,10 @@ namespace iris {
         const auto& vmul_u8  = __vmul< uint8x8_t>;
         const auto& vmul_u16 = __vmul<uint16x4_t>;
         const auto& vmul_u32 = __vmul<uint32x2_t>;
-        const auto& vmul_u64 = __vmul<uint64x1_t>;
 
         const auto& vmul_s8  = __vmul<  int8x8_t>;
         const auto& vmul_s16 = __vmul< int16x4_t>;
         const auto& vmul_s32 = __vmul< int32x2_t>;
-        const auto& vmul_s64 = __vmul< int64x1_t>;
 
         const auto& vmul_f32 = __vmul<float32x2_t>;
         ///////////////////////////////////////////////////////////////////////////
@@ -1659,12 +1714,10 @@ namespace iris {
         const auto& vmulq_u8  = __vmul<uint8x16_t>;
         const auto& vmulq_u16 = __vmul<uint16x8_t>;
         const auto& vmulq_u32 = __vmul<uint32x4_t>;
-        const auto& vmulq_u64 = __vmul<uint64x2_t>;
 
         const auto& vmulq_s8  = __vmul< int8x16_t>;
         const auto& vmulq_s16 = __vmul< int16x8_t>;
         const auto& vmulq_s32 = __vmul< int32x4_t>;
-        const auto& vmulq_s64 = __vmul< int64x2_t>;
 
         const auto& vmulq_f32 = __vmul<float32x4_t>;
         ///////////////////////////////////////////////////////////////////////////
