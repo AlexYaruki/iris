@@ -1491,7 +1491,7 @@ namespace iris {
         const auto& vget_lane_u32 = __vget_lane<uint32x2_t, uint32_t>;
         const auto& vget_lane_u64 = __vget_lane<uint64x1_t, uint64_t>;
 
-        const auto& vget_lane_f32 = __vget_lane<uint64x1_t, uint64_t>;
+        const auto& vget_lane_f32 = __vget_lane<float32x2_t, float>;
         ///////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vget_lane - 128-bit vectors //////////////////////////////////
@@ -1505,7 +1505,7 @@ namespace iris {
         const auto& vgetq_lane_u32 = __vget_lane<uint32x4_t, uint32_t>;
         const auto& vgetq_lane_u64 = __vget_lane<uint64x2_t, uint64_t>;
 
-        const auto& vgetq_lane_f32 = __vget_lane<uint64x2_t, uint64_t>;
+        const auto& vgetq_lane_f32 = __vget_lane<float32x4_t, float>;
         ///////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vdup_lane - 64-bit vectors //////////////////////////////////
@@ -1519,7 +1519,7 @@ namespace iris {
         const auto& vdup_lane_u32 = __vdup_lane<uint32x2_t, uint32_t>;
         const auto& vdup_lane_u64 = __vdup_lane<uint64x1_t, uint64_t>;
 
-        const auto& vdup_lane_f32 = __vdup_lane<uint64x1_t, uint64_t>;
+        const auto& vdup_lane_f32 = __vdup_lane<float32x2_t, float>;
         ///////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vdup_lane - 128-bit vectors /////////////////////////////////
@@ -1533,7 +1533,7 @@ namespace iris {
         const auto& vdupq_lane_u32 = __vdup_lane<uint32x4_t, uint32_t>;
         const auto& vdupq_lane_u64 = __vdup_lane<uint64x2_t, uint64_t>;
 
-        const auto& vdupq_lane_f32 = __vdup_lane<uint64x2_t, uint64_t>;
+        const auto& vdupq_lane_f32 = __vdup_lane<float32x4_t, float>;
         ///////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vadd - 64-bit vectors ///////////////////////////////////////
