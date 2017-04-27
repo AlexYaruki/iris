@@ -41,4 +41,3 @@ int main() {
 
 	test_vdup_n<float32x4_t>(vdupq_n_f32);
 }
-	
