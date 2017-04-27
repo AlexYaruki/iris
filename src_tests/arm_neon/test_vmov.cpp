@@ -5,7 +5,7 @@ using namespace iris;
 
 template<typename T>
 void test_vmov_n(T(*func)(typename T::elementType)) {
-	T::elementType data[T::length];
+	typename T::elementType data[T::length];
 	for (int i = 0; i < T::length; i++) {
 		data[i] = i;
 	}

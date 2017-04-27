@@ -2,7 +2,8 @@
 #define IRIS_H
 
 #include <cstdint>
-#include <cmath>
+#include <algorithm>
+#include <iostream>
 #include <limits>
 #include <utility>
 #include <cstring>
@@ -1047,6 +1048,13 @@ namespace iris {
             return v.template at<E>(i);
         }
 
+        template<typename T>
+        T __vset_lane(typename T::elementType x, T v, int32_t i) {
+            T result = v;
+            result.template at<typename T::elementType>(i) = x;
+            return result;
+        }
+
         template<typename T, typename E>
         T __vdup_lane(T v, size_t i) {
             return __vdup<T,E>(__vget_lane<T,E>(v,i));
@@ -1122,7 +1130,7 @@ namespace iris {
         }
 
 		/*
-		
+
 		vcagt
 		vcage
 		vcalt
@@ -1136,7 +1144,7 @@ namespace iris {
 		// ARM NEON - Bitwise ///////////////////////////////////////////////////////
 
 		/*
-		
+
 		vmvn
 		vand
 		vorr
@@ -1162,16 +1170,19 @@ namespace iris {
         R __vaddl(T v1, T v2) {
             R result;
             for(size_t i = 0; i < T::length; i++) {
-                result.template at<typename R::elementType>(i) = (typename R::elementType)v1.template at<typename T::elementType>(i) + v2.template at<typename T::elementType>(i);
+                typename R::elementType x = static_cast<typename R::elementType>(v1.template at<typename T::elementType>(i));
+                typename R::elementType y = static_cast<typename R::elementType>(v2.template at<typename T::elementType>(i));
+                result.template at<typename R::elementType>(i) = x + y;
             }
             return result;
         }
 
-        template<typename T, typename R>
+        template<typename R, typename T>
         R __vaddw(R v1, T v2) {
             R result;
             for(size_t i = 0; i < T::length; i++) {
-                result.template at<typename R::elementType>(i) = v1.template at<typename R::elementType>(i) + v2.template at<typename T::elementType>(i);
+                typename R::elementType x = static_cast<typename R::elementType>(v2.template at<typename T::elementType>(i));
+                result.template at<typename R::elementType>(i) = v1.template at<typename R::elementType>(i) + x;
             }
             return result;
         }
@@ -1185,7 +1196,7 @@ namespace iris {
             }
             return result;
         }
-		
+
         template<typename T>
         T __vqadd(T v1, T v2) {
             T result;
@@ -1270,61 +1281,6 @@ namespace iris {
 
 		/////////////////////////////////////////////////////////////////////////////
 
-        
-        // ARM NEON - Absolute Difference ///////////////////////////////////////////
-        
-        //TODO: Support for floating-point numbers
-        template<typename T>
-        T __vabd(T v1, T v2) {
-            T result;
-            if(!std::is_signed<typename T::elementType>()) {
-                for(int i = 0; i < T::length; i++) {
-                    typename T::elementType v_min = std::min(v1.template at<typename T::elementType>(i),v2.template at<typename T::elementType>(i));
-                    typename T::elementType v_max = std::max(v1.template at<typename T::elementType>(i),v2.template at<typename T::elementType>(i));
-                    result.template at<typename T::elementType>(i) = v_max - v_min;
-                }
-            } else {
-                for(int i = 0; i < T::length; i++) {
-                    typedef typename std::make_unsigned<typename T::elementType>::type unsignedElementType;
-                    unsignedElementType x = (unsignedElementType)v1.template at<typename T::elementType>(i);
-                    unsignedElementType y = (unsignedElementType)v2.template at<typename T::elementType>(i);
-                    unsignedElementType temp = x - y;
-                    if(v1.template at<typename T::elementType>(i) < v2.template at<typename T::elementType>(i)){
-                        temp = 1 + ~temp;
-                    }
-                    result.template at<typename T::elementType>(i) = (typename T::elementType)temp;
-                }
-            }
-            return result;
-        }
-
-        //TODO: Support for floating-point numbers
-        template<typename T, typename R>
-        R __vabdl(T v1, T v2) {
-            R result;
-            if(!std::is_signed<typename T::elementType>()) {
-                for(int i = 0; i < T::length; i++) {
-                    typename R::elementType v_min = std::min((typename R::elementType)v1.template at<typename T::elementType>(i),(typename R::elementType)v2.template at<typename T::elementType>(i));
-                    typename R::elementType v_max = std::max((typename R::elementType)v1.template at<typename T::elementType>(i),(typename R::elementType)v2.template at<typename T::elementType>(i));
-                    result.template at<typename R::elementType>(i) = v_max - v_min;
-                }
-            } else {
-                typedef typename std::make_unsigned<typename R::elementType>::type unsignedElementType;
-                for(int i = 0; i < R::length; i++) {
-                    unsignedElementType x = (unsignedElementType)v1.template at<typename T::elementType>(i);
-                    unsignedElementType y = (unsignedElementType)v2.template at<typename T::elementType>(i);
-                    unsignedElementType temp = x - y;
-                    if(v1.template at<typename R::elementType>(i) < v2.template at<typename T::elementType>(i)){
-                        temp = 1 + ~temp;
-                    }
-                    result.template at<typename T::elementType>(i) = (typename T::elementType)temp;
-                }
-            }
-            return result;
-        }
-
-        /////////////////////////////////////////////////////////////////////////////
-        
 		// ARM NEON - Multiplication ////////////////////////////////////////////////
 
         template<typename T>
@@ -1362,6 +1318,15 @@ namespace iris {
 		}
 
 		/////////////////////////////////////////////////////////////////////////////
+
+        template<typename T>
+        T __vmax(T v1, T v2) {
+            T result;
+            for(int i = 0; i < T::length; i++) {
+                result.template at<typename T::elementType>(i) = v1.template at<typename T::elementType>(i) > v2.template at<typename T::elementType>(i) ? v1.template at<typename T::elementType>(i) : v2.template at<typename T::elementType>(i);
+            }
+            return result;
+        }
 
         // ARM NEON - Types - 64-bit
 
@@ -1533,6 +1498,34 @@ namespace iris {
 
         const auto& vdupq_n_f32 = __vdup<float32x4_t,float>;
         const auto& vmovq_n_f32 = __vdup<float32x4_t,float>;
+        ///////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vset_lane - 64-bit vectors //////////////////////////////////
+        const auto& vset_lane_s8  = __vset_lane<int8x8_t>;
+        const auto& vset_lane_s16 = __vset_lane<int16x4_t>;
+        const auto& vset_lane_s32 = __vset_lane<int32x2_t>;
+        const auto& vset_lane_s64 = __vset_lane<int64x1_t>;
+
+        const auto& vset_lane_u8  = __vset_lane<uint8x8_t>;
+        const auto& vset_lane_u16 = __vset_lane<uint16x4_t>;
+        const auto& vset_lane_u32 = __vset_lane<uint32x2_t>;
+        const auto& vset_lane_u64 = __vset_lane<uint64x1_t>;
+
+        const auto& vset_lane_f32 = __vset_lane<float32x2_t>;
+        ///////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vset_lane - 128-bit vectors //////////////////////////////////
+        const auto& vsetq_lane_s8  = __vset_lane<int8x16_t>;
+        const auto& vsetq_lane_s16 = __vset_lane<int16x8_t>;
+        const auto& vsetq_lane_s32 = __vset_lane<int32x4_t>;
+        const auto& vsetq_lane_s64 = __vset_lane<int64x2_t>;
+
+        const auto& vsetq_lane_u8  = __vset_lane<uint8x16_t>;
+        const auto& vsetq_lane_u16 = __vset_lane<uint16x8_t>;
+        const auto& vsetq_lane_u32 = __vset_lane<uint32x4_t>;
+        const auto& vsetq_lane_u64 = __vset_lane<uint64x2_t>;
+
+        const auto& vsetq_lane_f32 = __vset_lane<float32x4_t>;
         ///////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vget_lane - 64-bit vectors //////////////////////////////////
@@ -1753,46 +1746,30 @@ namespace iris {
         const auto& vhsubq_s32 = __vhsub<int32x4_t>;
         ///////////////////////////////////////////////////////////////////////////
 
-        // ARM NEON - vabd - 64-bit vectors ///////////////////////////////////////
-        
-        const auto& vabd_u8  = __vabd<uint8x8_t>;
-        const auto& vabd_u16 = __vabd<uint16x4_t>;
-        const auto& vabd_u32 = __vabd<uint32x2_t>;
-        
-        const auto& vabd_s8  = __vabd<int8x8_t>;
-        const auto& vabd_s16 = __vabd<int16x4_t>;
-        const auto& vabd_s32 = __vabd<int32x2_t>;
-        
-        const auto& vabd_f32 = __vabd<float32x2_t>;
-        
+        // ARM NEON - vqsub - 64-bit vectors ///////////////////////////////////////////////////////
+        const auto& vqsub_u8  = __vqsub<uint8x8_t>;
+        const auto& vqsub_u16 = __vqsub<uint16x4_t>;
+        const auto& vqsub_u32 = __vqsub<uint32x2_t>;
+        const auto& vqsub_u64 = __vqsub<uint64x1_t>;
+
+        const auto& vqsub_s8  = __vqsub<int8x8_t>;
+        const auto& vqsub_s16 = __vqsub<int16x4_t>;
+        const auto& vqsub_s32 = __vqsub<int32x2_t>;
+        const auto& vqsub_s64 = __vqsub<int64x1_t>;
         ///////////////////////////////////////////////////////////////////////////
-        
-        // ARM NEON - vabd - 128-bit vectors ///////////////////////////////////////
-        
-        const auto& vabdq_u8  = __vabd<uint8x16_t>;
-        const auto& vabdq_u16 = __vabd<uint16x8_t>;
-        const auto& vabdq_u32 = __vabd<uint32x4_t>;
-        
-        const auto& vabdq_s8  = __vabd<int8x16_t>;
-        const auto& vabdq_s16 = __vabd<int16x8_t>;
-        const auto& vabdq_s32 = __vabd<int32x4_t>;
-        
-        const auto& vabdq_f32 = __vabd<float32x4_t>;
-        
+
+        // ARM NEON - vqsub - 128-bit vectors ///////////////////////////////////////////////////////
+        const auto& vqsubq_u8  = __vqadd<uint8x16_t>;
+        const auto& vqsubq_u16 = __vqadd<uint16x8_t>;
+        const auto& vqsubq_u32 = __vqadd<uint32x4_t>;
+        const auto& vqsubq_u64 = __vqadd<uint64x2_t>;
+
+        const auto& vqsubq_s8  = __vqadd<int8x16_t>;
+        const auto& vqsubq_s16 = __vqadd<int16x8_t>;
+        const auto& vqsubq_s32 = __vqadd<int32x4_t>;
+        const auto& vqsubq_s64 = __vqadd<int64x2_t>;
         ///////////////////////////////////////////////////////////////////////////
-      
-        // ARM NEON - vabdl ///////////////////////////////////////////////////////
-      
-        const auto& vabdl_u8  = __vabdl< uint8x8_t, uint16x8_t>;
-        const auto& vabdl_u16 = __vabdl<uint16x4_t, uint32x4_t>;
-        const auto& vabdl_u32 = __vabdl<uint32x2_t, uint64x2_t>;
-        
-        const auto& vabdl_s8  = __vabdl< int8x8_t, int16x8_t>;
-        const auto& vabdl_s16 = __vabdl<int16x4_t, int32x4_t>;
-        const auto& vabdl_s32 = __vabdl<int32x2_t, int64x2_t>;
-        
-        ///////////////////////////////////////////////////////////////////////////
-        
+
         // ARM NEON - vmul - 64-bit vectors ///////////////////////////////////////
         const auto& vmul_u8  = __vmul< uint8x8_t>;
         const auto& vmul_u16 = __vmul<uint16x4_t>;
@@ -1971,6 +1948,29 @@ namespace iris {
         const auto& vcleq_f32 = __vcle< float32x4_t, uint32x4_t>;
         ///////////////////////////////////////////////////////////////////////////
 
+        // ARM NEON - vmax - 64-bit vectors ////////////////////////////////////
+        const auto& vmax_u8  = __vmax< uint8x8_t>;
+        const auto& vmax_u16 = __vmax<uint16x4_t>;
+        const auto& vmax_u32 = __vmax<uint32x2_t>;
+
+        const auto& vmax_s8  = __vmax< int8x8_t>;
+        const auto& vmax_s16 = __vmax<int16x4_t>;
+        const auto& vmax_s32 = __vmax<int32x2_t>;
+
+        const auto& vmax_f32 = __vmax<float32x2_t>;
+        ////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vmax - 128-bit vectors ///////////////////////////////////
+        const auto& vmaxq_u8  = __vmax<uint8x16_t>;
+        const auto& vmaxq_u16 = __vmax<uint16x8_t>;
+        const auto& vmaxq_u32 = __vmax<uint32x4_t>;
+
+        const auto& vmaxq_s8  = __vmax<int8x16_t>;
+        const auto& vmaxq_s16 = __vmax<int16x8_t>;
+        const auto& vmaxq_s32 = __vmax<int32x4_t>;
+
+        const auto& vmaxq_f32 = __vmax<float32x4_t>;
+        ////////////////////////////////////////////////////////////////////////
     }
 
     using namespace arm_neon;
