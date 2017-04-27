@@ -1083,7 +1083,7 @@ namespace iris {
         template<typename T>
         T __vld1_dup(typename T::elementType* src) {
             typename T::elementType x = *src;
-            T result = __vdup(x);
+            T result = __vdup<T,typename T::elementType>(x);
             return result;
         }
 
@@ -1340,6 +1340,15 @@ namespace iris {
 		/////////////////////////////////////////////////////////////////////////////
 
         template<typename T>
+        T __vmin(T v1, T v2) {
+            T result;
+            for(int i = 0; i < T::length; i++) {
+                result.template at<typename T::elementType>(i) = v1.template at<typename T::elementType>(i) < v2.template at<typename T::elementType>(i) ? v1.template at<typename T::elementType>(i) : v2.template at<typename T::elementType>(i);
+            }
+            return result;
+        }
+
+        template<typename T>
         T __vmax(T v1, T v2) {
             T result;
             for(int i = 0; i < T::length; i++) {
@@ -1497,6 +1506,35 @@ namespace iris {
 
         const auto& vld1q_lane_f32 = __vld1_lane<float32x4_t>;
         /////////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vld1 - 64-bit vector //////////////////////////////////////////
+        const auto& vld1_dup_u8  = __vld1_dup<uint8x8_t>;
+        const auto& vld1_dup_u16 = __vld1_dup<uint16x4_t>;
+        const auto& vld1_dup_u32 = __vld1_dup<uint32x2_t>;
+        const auto& vld1_dup_u64 = __vld1_dup<uint64x1_t>;
+
+        const auto& vld1_dup_s8  = __vld1_dup<int8x8_t>;
+        const auto& vld1_dup_s16 = __vld1_dup<int16x4_t>;
+        const auto& vld1_dup_s32 = __vld1_dup<int32x2_t>;
+        const auto& vld1_dup_s64 = __vld1_dup<int64x1_t>;
+
+        const auto& vld1_dup_f32 = __vld1_dup<float32x2_t>;
+        /////////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vld1 - 128-bit vector //////////////////////////////////////////
+        const auto& vld1q_dup_u8  = __vld1_dup<uint8x16_t>;
+        const auto& vld1q_dup_u16 = __vld1_dup<uint16x8_t>;
+        const auto& vld1q_dup_u32 = __vld1_dup<uint32x4_t>;
+        const auto& vld1q_dup_u64 = __vld1_dup<uint64x2_t>;
+
+        const auto& vld1q_dup_s8  = __vld1_dup<int8x16_t>;
+        const auto& vld1q_dup_s16 = __vld1_dup<int16x8_t>;
+        const auto& vld1q_dup_s32 = __vld1_dup<int32x4_t>;
+        const auto& vld1q_dup_s64 = __vld1_dup<int64x2_t>;
+
+        const auto& vld1q_dup_f32 = __vld1_dup<float32x4_t>;
+        /////////////////////////////////////////////////////////////////////////////
+
 
         // ARM NEON - vdup/vmov - 64-bit vector ///////////////////////////////////
         const auto& vdup_n_s8  = __vdup<int8x8_t ,int8_t >;
@@ -2019,6 +2057,31 @@ namespace iris {
 
         const auto& vmaxq_f32 = __vmax<float32x4_t>;
         ////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vmin - 64-bit vectors ////////////////////////////////////
+        const auto& vmin_u8  = __vmin< uint8x8_t>;
+        const auto& vmin_u16 = __vmin<uint16x4_t>;
+        const auto& vmin_u32 = __vmin<uint32x2_t>;
+
+        const auto& vmin_s8  = __vmin< int8x8_t>;
+        const auto& vmin_s16 = __vmin<int16x4_t>;
+        const auto& vmin_s32 = __vmin<int32x2_t>;
+
+        const auto& vmin_f32 = __vmin<float32x2_t>;
+        ////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vmin - 128-bit vectors ///////////////////////////////////
+        const auto& vminq_u8  = __vmin<uint8x16_t>;
+        const auto& vminq_u16 = __vmin<uint16x8_t>;
+        const auto& vminq_u32 = __vmin<uint32x4_t>;
+
+        const auto& vminq_s8  = __vmin<int8x16_t>;
+        const auto& vminq_s16 = __vmin<int16x8_t>;
+        const auto& vminq_s32 = __vmin<int32x4_t>;
+
+        const auto& vminq_f32 = __vmin<float32x4_t>;
+        ////////////////////////////////////////////////////////////////////////
+
     }
 
     using namespace arm_neon;

@@ -3,15 +3,39 @@
 
 using namespace iris;
 
+template <typename T>
+void test_vmax(T(*func)(T,T)) {
+    T v1, v2;
+    for(int i = 0; i < T::length; i++) {
+        v1.template at<typename T::elementType>(i) = i;
+        v1.template at<typename T::elementType>(i) = T::length - i;
+    }
+    T result = func(v1,v2);
+    for(int i = 0; i < T::length/2; i++) {
+        assert(result.template at<typename T::elementType>(i) >= v1.template at<typename T::elementType>(i));
+        assert(result.template at<typename T::elementType>(i) >= v1.template at<typename T::elementType>(i));
+    }
+}
+
 int main() {
-    auto v1 = vdup_n_s32(1);
-    auto v2 = vdup_n_s32(2);
-    auto temp = vmax_s32(v1,v2);
-    for(int i = 0; i < decltype(temp)::length; i++) {
-        assert(temp.at<decltype(temp)::elementType>(i) == v2.at<decltype(temp)::elementType>(i));
-    }
-    temp = vmax_s32(v2,v1);
-    for(int i = 0; i < decltype(temp)::length; i++) {
-        assert(temp.at<decltype(temp)::elementType>(i) == v2.at<decltype(temp)::elementType>(i));
-    }
+    test_vmax(vmax_s8);
+    test_vmax(vmax_s16);
+    test_vmax(vmax_s32);
+
+    test_vmax(vmax_u8);
+    test_vmax(vmax_u16);
+    test_vmax(vmax_u32);
+
+    test_vmax(vmax_f32);
+
+    test_vmax(vmaxq_s8);
+    test_vmax(vmaxq_s16);
+    test_vmax(vmaxq_s32);
+
+    test_vmax(vmaxq_u8);
+    test_vmax(vmaxq_u16);
+    test_vmax(vmaxq_u32);
+
+    test_vmax(vmaxq_f32);
+
 }
