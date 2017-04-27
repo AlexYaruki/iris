@@ -1080,6 +1080,13 @@ namespace iris {
             return result;
         }
 
+        template<typename T>
+        T __vld1_dup(typename T::elementType* src) {
+            typename T::elementType x = *src;
+            T result = __vdup(x);
+            return result;
+        }
+
 		// ARM NEON - Comparision ///////////////////////////////////////////////////
 
         template<typename T, typename R>
