@@ -5,15 +5,18 @@ using namespace iris;
 
 template <typename T>
 void test_vabs(T(*func)(T)) {
-    T v;
+    T v, result;
+
+    // All positive
     for(size_t i = 0; i < T::length; i++) {
         v.template at<typename T::elementType>(i) = i;
     }
-    T result = func(v);
+    result = func(v);
     for(size_t i = 0; i < T::length; i++) {
         assert(result.template at<typename T::elementType>(i) == static_cast<typename T::elementType>(i));
     }
 
+    // All negative
     for(size_t i = 0; i < T::length; i++) {
         v.template at<typename T::elementType>(i) = -static_cast<typename T::elementType>(i);
     }
@@ -27,7 +30,11 @@ void test_vabs(T(*func)(T)) {
     }
     result = func(v);
     for(size_t i = 0; i < T::length; i++) {
-        assert(result.template at<typename T::elementType>(i) == static_cast<typename T::elementType>(i));
+        if(std::numeric_limits<typename T::elementType>::is_signed) {
+            assert(result.template at<typename T::elementType>(i) == std::numeric_limits<typename T::elementType>::min());
+        } else {
+            assert(result.template at<typename T::elementType>(i) == -1);
+        }
     }
 }
 
