@@ -1281,7 +1281,6 @@ namespace iris {
 
         template<typename T>
         T __vqsub(T v1, T v2) {
-            std::cout << "Calling " << __PRETTY_FUNCTION__  << std::endl;
             T result;
             for(size_t i = 0; i < T::length; i++) {
                 auto x = v1.template at<typename T::elementType>(i);
@@ -1914,6 +1913,30 @@ namespace iris {
         const auto& vmlaq_u32 = __vmla<uint32x4_t>;
 
         const auto& vmlaq_f32 = __vmla<float32x4_t>;
+        ///////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vmls - 64-bit vector ///////////////////////////////////////////////////////
+        const auto& vmls_s8  = __vmls< int8x8_t>;
+        const auto& vmls_s16 = __vmls<int16x4_t>;
+        const auto& vmls_s32 = __vmls<int32x2_t>;
+
+        const auto& vmls_u8  = __vmls<uint8x8_t>;
+        const auto& vmls_u16 = __vmls<uint16x4_t>;
+        const auto& vmls_u32 = __vmls<uint32x2_t>;
+
+        const auto& vmls_f32 = __vmls<float32x2_t>;
+        ///////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vmls - 128-bit vector ///////////////////////////////////////////////////////
+        const auto& vmlsq_s8  = __vmls<int8x16_t>;
+        const auto& vmlsq_s16 = __vmls<int16x8_t>;
+        const auto& vmlsq_s32 = __vmls<int32x4_t>;
+
+        const auto& vmlsq_u8  = __vmls<uint8x16_t>;
+        const auto& vmlsq_u16 = __vmls<uint16x8_t>;
+        const auto& vmlsq_u32 = __vmls<uint32x4_t>;
+
+        const auto& vmlsq_f32 = __vmls<float32x4_t>;
         ///////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vceq - 64-bit vectors ///////////////////////////////////////
