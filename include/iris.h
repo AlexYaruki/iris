@@ -1363,6 +1363,30 @@ namespace iris {
             return result;
         }
 
+        template<typename T>
+        T __iris__abs(T x) {
+            if(x < 0) {
+                return x * static_cast<T>(-1);
+            } else {
+                return x;
+            }
+        }
+        template<>
+        float __iris__abs(float x) {
+            return std::abs(x);
+        }
+
+        template<typename T>
+        T __vabs(T v) {
+            T result;
+            for(size_t i = 0; i < T::length; i++) {
+                typename T::elementType x = v.template at<typename T::elementType>(i);
+                result.template at<typename T::elementType>(i) = __iris__abs(x);
+            }
+            return result;
+        }
+
+
         // ARM NEON - Types - 64-bit
 
         using int8x8_t  = vector<int8_t,8>;
@@ -1456,6 +1480,20 @@ namespace iris {
         using namespace expansion;
 
 #endif
+
+        // ARM_NEON - vabs - 64-bit vector /////////////////////////////////////
+        const auto& vabs_s8 = __vabs<int8x8_t>;
+        const auto& vabs_s16 = __vabs<int16x4_t>;
+        const auto& vabs_s32 = __vabs<int32x2_t>;
+        const auto& vabs_f32 = __vabs<float32x2_t>;
+        ////////////////////////////////////////////////////////////////////////
+
+        // ARM_NEON - vabs - 64-bit vector /////////////////////////////////////
+        const auto& vabsq_s8  = __vabs<int8x16_t>;
+        const auto& vabsq_s16 = __vabs<int16x8_t>;
+        const auto& vabsq_s32 = __vabs<int32x4_t>;
+        const auto& vabsq_f32 = __vabs<float32x4_t>;
+        ////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vld1 - 64-bit vector //////////////////////////////////////////
         const auto& vld1_u8  = __vld1<uint8x8_t, uint8_t>;
