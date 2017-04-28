@@ -776,7 +776,8 @@ namespace iris {
                 return result;
             }
         }
-#if !defined(_MSC_VER)
+
+#ifndef _MSC_VER
         using __int64 = int64_t;
 #endif
         using __m64 = vector<uint8_t, 8>;
