@@ -15,7 +15,6 @@ void test_vget_lane(typename T::elementType(*func)(T,size_t)) {
 	}
 }
 
-
 int main() {
 	test_vget_lane<int8x8_t>(vget_lane_s8);
 	test_vget_lane<int16x4_t>(vget_lane_s16);
