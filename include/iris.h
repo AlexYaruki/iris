@@ -1371,6 +1371,7 @@ namespace iris {
                 return x;
             }
         }
+
         template<>
         float __iris__abs(float x) {
             return std::abs(x);
@@ -1382,6 +1383,43 @@ namespace iris {
             for(size_t i = 0; i < T::length; i++) {
                 typename T::elementType x = v.template at<typename T::elementType>(i);
                 result.template at<typename T::elementType>(i) = __iris__abs(x);
+            }
+            return result;
+        }
+
+        template<typename T>
+        T __iris__qabs(T x) {
+            std::cout << "x: " << (int64_t)x << std::endl;
+            if(x < 0) {
+                T temp = x * static_cast<T>(-1);
+                std::cout << "temp: " << (int64_t)temp << std::endl;
+                if(temp > x) {
+                    return temp;
+                } else {
+                    return std::numeric_limits<T>::max();
+                }
+            } else {
+                return x;
+            }
+        }
+
+        template<>
+        float __iris__qabs(float x) {
+            return std::abs(x);
+        }
+
+        template<typename T>
+        T __vqabs(T v) {
+            T result;
+            for(size_t i = 0; i < T::length; i++) {
+                typename T::elementType x = v.template at<typename T::elementType>(i);
+                result.template at<typename T::elementType>(i) = __iris__qabs(x);
+                if(std::numeric_limits<typename T::elementType>::is_integer) {
+                    std::cout << "result = " << (int64_t)result.template at<typename T::elementType>(i) << std::endl;
+                } else {
+                    std::cout.precision(40);
+                    std::cout << "result = " << result.template at<typename T::elementType>(i) << std::endl;
+                }
             }
             return result;
         }
@@ -1493,6 +1531,20 @@ namespace iris {
         const auto& vabsq_s16 = __vabs<int16x8_t>;
         const auto& vabsq_s32 = __vabs<int32x4_t>;
         const auto& vabsq_f32 = __vabs<float32x4_t>;
+        ////////////////////////////////////////////////////////////////////////
+
+        // ARM_NEON - vqabs - 64-bit vector /////////////////////////////////////
+        const auto& vqabs_s8 = __vqabs<int8x8_t>;
+        const auto& vqabs_s16 = __vqabs<int16x4_t>;
+        const auto& vqabs_s32 = __vqabs<int32x2_t>;
+        const auto& vqabs_f32 = __vqabs<float32x2_t>;
+        ////////////////////////////////////////////////////////////////////////
+
+        // ARM_NEON - vqabs - 64-bit vector /////////////////////////////////////
+        const auto& vqabsq_s8  = __vqabs<int8x16_t>;
+        const auto& vqabsq_s16 = __vqabs<int16x8_t>;
+        const auto& vqabsq_s32 = __vqabs<int32x4_t>;
+        const auto& vqabsq_f32 = __vqabs<float32x4_t>;
         ////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vld1 - 64-bit vector //////////////////////////////////////////
