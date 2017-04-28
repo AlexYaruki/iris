@@ -1224,9 +1224,9 @@ namespace iris {
             for(size_t i = 0; i < T::length; i++) {
                 auto x = v1.template at<typename T::elementType>(i);
                 auto y = v2.template at<typename T::elementType>(i);
-                if((x > 0) && (y > std::numeric_limits<typename T::elementType>::max() - x)) { // Overflow
+                if((y > 0) && (x > std::numeric_limits<typename T::elementType>::max() - y)) {
                     result.template at<typename T::elementType>(i) = std::numeric_limits<typename T::elementType>::max();
-                } else if (std::numeric_limits<typename T::elementType>::is_signed && (x < 0) && (y < std::numeric_limits<typename T::elementType>::min() - x)) { //Underflow
+                } else if ((x < 0) && (y < std::numeric_limits<typename T::elementType>::max() - y)) {
                     result.template at<typename T::elementType>(i) = std::numeric_limits<typename T::elementType>::min();
                 } else {
                     result.template at<typename T::elementType>(i) = x + y;
@@ -1281,14 +1281,15 @@ namespace iris {
 
         template<typename T>
         T __vqsub(T v1, T v2) {
+            std::cout << "Calling " << __PRETTY_FUNCTION__  << std::endl;
             T result;
             for(size_t i = 0; i < T::length; i++) {
                 auto x = v1.template at<typename T::elementType>(i);
                 auto y = v2.template at<typename T::elementType>(i);
-                if((x > 0) && (y < std::numeric_limits<typename T::elementType>::min() + x)) { // Overflow
-                    result.template at<typename T::elementType>(i) = std::numeric_limits<typename T::elementType>::max();
-                } else if (std::numeric_limits<typename T::elementType>::is_signed && (x < 0) && (y > std::numeric_limits<typename T::elementType>::min() + x)) { //Underflow
+                if((y > 0) && (x < std::numeric_limits<typename T::elementType>::min() + y)) {
                     result.template at<typename T::elementType>(i) = std::numeric_limits<typename T::elementType>::min();
+                } else if ((y < 0) && (x > std::numeric_limits<typename T::elementType>::max() + y)) {
+                    result.template at<typename T::elementType>(i) = std::numeric_limits<typename T::elementType>::max();
                 } else {
                     result.template at<typename T::elementType>(i) = x - y;
                 }
@@ -1846,15 +1847,15 @@ namespace iris {
         ///////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vqsub - 128-bit vectors ///////////////////////////////////////////////////////
-        const auto& vqsubq_u8  = __vqadd<uint8x16_t>;
-        const auto& vqsubq_u16 = __vqadd<uint16x8_t>;
-        const auto& vqsubq_u32 = __vqadd<uint32x4_t>;
-        const auto& vqsubq_u64 = __vqadd<uint64x2_t>;
+        const auto& vqsubq_u8  = __vqsub<uint8x16_t>;
+        const auto& vqsubq_u16 = __vqsub<uint16x8_t>;
+        const auto& vqsubq_u32 = __vqsub<uint32x4_t>;
+        const auto& vqsubq_u64 = __vqsub<uint64x2_t>;
 
-        const auto& vqsubq_s8  = __vqadd<int8x16_t>;
-        const auto& vqsubq_s16 = __vqadd<int16x8_t>;
-        const auto& vqsubq_s32 = __vqadd<int32x4_t>;
-        const auto& vqsubq_s64 = __vqadd<int64x2_t>;
+        const auto& vqsubq_s8  = __vqsub<int8x16_t>;
+        const auto& vqsubq_s16 = __vqsub<int16x8_t>;
+        const auto& vqsubq_s32 = __vqsub<int32x4_t>;
+        const auto& vqsubq_s64 = __vqsub<int64x2_t>;
         ///////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vmul - 64-bit vectors ///////////////////////////////////////
