@@ -1389,10 +1389,8 @@ namespace iris {
 
         template<typename T>
         T __iris__qabs(T x) {
-            std::cout << "x: " << (int64_t)x << std::endl;
             if(x < 0) {
                 T temp = x * static_cast<T>(-1);
-                std::cout << "temp: " << (int64_t)temp << std::endl;
                 if(temp > x) {
                     return temp;
                 } else {
@@ -1414,16 +1412,39 @@ namespace iris {
             for(size_t i = 0; i < T::length; i++) {
                 typename T::elementType x = v.template at<typename T::elementType>(i);
                 result.template at<typename T::elementType>(i) = __iris__qabs(x);
-                if(std::numeric_limits<typename T::elementType>::is_integer) {
-                    std::cout << "result = " << (int64_t)result.template at<typename T::elementType>(i) << std::endl;
-                } else {
-                    std::cout.precision(40);
-                    std::cout << "result = " << result.template at<typename T::elementType>(i) << std::endl;
-                }
             }
             return result;
         }
 
+        template<typename T, typename R, typename = typename std::enable_if<sizeof(T)/2 == sizeof(R)>::type>
+        R __vget_high(T v) {
+            R result;
+            for(size_t i = T::length/2, j = 0; i < T::length; i++, j++) {
+                result.template at<typename R::elementType>(j) = v.template at<typename T::elementType>(i);
+            }
+            return result;
+        }
+
+        template<typename T, typename R, typename = typename std::enable_if<sizeof(T)/2 == sizeof(R)>::type>
+        R __vget_low(T v) {
+            R result;
+            for(size_t i = 0; i < R::length; i++) {
+                result.template at<typename R::elementType>(i) = v.template at<typename T::elementType>(i);
+            }
+            return result;
+        }
+
+        template<typename T, typename R, typename = typename std::enable_if<sizeof(T)/2 == sizeof(R)>::type>
+        R __vcombine(T v1, T v2) {
+            R result;
+            for(size_t i = 0; i < T::length; i++) {
+                result.template at<typename R::elementType>(i) = v1.template at<typename T::elementType>(i);
+            }
+            for(size_t i = 0, j = T::length; i < R::length; i++, j++) {
+                result.template at<typename R::elementType>(j) = v2.template at<typename T::elementType>(i);
+            }
+            return result;
+        }
 
         // ARM NEON - Types - 64-bit
 
