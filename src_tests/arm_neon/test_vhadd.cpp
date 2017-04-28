@@ -6,13 +6,13 @@ using namespace iris;
 template<typename T>
 void test_vhadd(T(*func)(T,T)) {
     T v1, v2;
-    for(int i = 0; i < T::length; i++) {
+    for(size_t i = 0; i < T::length; i++) {
         v1.template at<typename T::elementType>(i) = i;
         v2.template at<typename T::elementType>(i) = i;
     }
     T result = func(v1,v2);
-    for(int i = 0; i < T::length; i++) {
-        assert(result.template at<typename T::elementType>(i) == i);
+    for(size_t i = 0; i < T::length; i++) {
+        assert(result.template at<typename T::elementType>(i) == static_cast<typename T::elementType>(i));
     }
 }
 

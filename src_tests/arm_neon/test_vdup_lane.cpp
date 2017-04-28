@@ -6,10 +6,10 @@ using namespace iris;
 template<typename T>
 void test_vdup_lane(T(*func)(T,size_t)) {
 	T data;
-	for (int i = 0; i < T::length; i++) {
+	for (size_t i = 0; i < T::length; i++) {
 		data.template at<typename T::elementType>(i) = (typename T::elementType) i;
 	}
-	for (int i = 0; i < T::length; i++) {
+	for (size_t i = 0; i < T::length; i++) {
 		T output = func(data, i);
 		for (size_t j = 0; j < T::length; j++) {
 			assert(output.template at<typename T::elementType>(j) == (typename T::elementType) i);

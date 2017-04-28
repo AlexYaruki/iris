@@ -10,12 +10,12 @@ template<typename T>
 void test_vqsub(T(*func)(T,T)) {
     T v1, v2;
     std::cout << ">>>> Underflow" << std::endl;
-    for(int i = 0; i < T::length; i++) {
+    for(size_t i = 0; i < T::length; i++) {
         v1.template at<typename T::elementType>(i) = std::numeric_limits<typename T::elementType>::min();
         v2.template at<typename T::elementType>(i) = i;
     }
     T result = func(v1,v2);
-    for(int i = 0; i < T::length; i++) {
+    for(size_t i = 0; i < T::length; i++) {
         if(std::is_signed<typename T::elementType>::value) {
             std::cout << "(" << static_cast<int64_t>(v1.template at<typename T::elementType>(i)) << " - " << static_cast<int64_t>(v2.template at<typename T::elementType>(i)) << ")"
                       << " Expected: " << static_cast<int64_t>(std::numeric_limits<typename T::elementType>::min())
@@ -29,12 +29,12 @@ void test_vqsub(T(*func)(T,T)) {
     }
     if(std::numeric_limits<typename T::elementType>::is_signed) {
         std::cout << ">>>> Overflow " << std::endl;
-        for(int i = 0; i < T::length; i++) {
+        for(size_t i = 0; i < T::length; i++) {
             v1.template at<typename T::elementType>(i) = std::numeric_limits<typename T::elementType>::max();
             v2.template at<typename T::elementType>(i) = -i;
         }
         result = func(v1,v2);
-        for(int i = 0; i < T::length; i++) {
+        for(size_t i = 0; i < T::length; i++) {
             std::cout << "(" << static_cast<int64_t>(v1.template at<typename T::elementType>(i)) << " - " << static_cast<int64_t>(v2.template at<typename T::elementType>(i)) << ")"
                           << " Expected: " << static_cast<int64_t>(std::numeric_limits<typename T::elementType>::max())
                           << ", actual: " << static_cast<int64_t>(result.template at<typename T::elementType>(i)) << std::endl;

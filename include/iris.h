@@ -234,7 +234,7 @@ namespace iris {
             template<typename T,typename E,size_t N,typename... Args,typename = typename std::enable_if<sizeof...(Args) == N>::type>
             T ____mm_setr(Args&&... args) {
                 T result = ____mm_set<T, E, N>(args...);
-                for(int i = 0; i < (sizeof(T)/sizeof(E)/2); i++) {
+                for(size_t i = 0; i < (sizeof(T)/sizeof(E)/2); i++) {
                     std::swap(result.template at<E>(i),result.template at<E>((sizeof(T)/sizeof(E) - 1 - i)));
                 }
                 return result;
@@ -244,7 +244,7 @@ namespace iris {
             T ____mm_set1(E x) {
                 T result;
                 E* target = reinterpret_cast<E*>(&result);
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     target[i] = x;
                 }
                 return result;
@@ -253,7 +253,7 @@ namespace iris {
             template<typename T>
             T ____mm_setzero() {
                 T result;
-                for(int i = 0; i < sizeof(T); i++) {
+                for(size_t i = 0; i < sizeof(T); i++) {
                     result.template at<uint8_t>(i) = 0;
                 }
                 return result;
@@ -263,7 +263,7 @@ namespace iris {
             T ____mm_unpackhi(T v1, T v2) {
                 T result;
                 E* target = reinterpret_cast<E*>(&result);
-                for(int i = 0, j = (sizeof(T)/sizeof(E))/2; i < (sizeof(T)/sizeof(E))/2; i+=2, j++) {
+                for(size_t i = 0, j = (sizeof(T)/sizeof(E))/2; i < (sizeof(T)/sizeof(E))/2; i+=2, j++) {
                     target[i]   = v1.template at<E>(j);
                     target[i+1] = v2.template at<E>(j);
                 }
@@ -274,7 +274,7 @@ namespace iris {
             T ____mm_unpacklo(T v1, T v2) {
                 T result;
                 E* target = reinterpret_cast<E*>(&result);
-                for(int i = 0, j = 0; i < (sizeof(T)/sizeof(E))/2; i+=2, j++) {
+                for(size_t i = 0, j = 0; i < (sizeof(T)/sizeof(E))/2; i+=2, j++) {
                     target[i]   = v1.template at<E>(j);
                     target[i+1] = v2.template at<E>(j);
                 }
@@ -286,7 +286,7 @@ namespace iris {
             T ____mm_cmpeq(T v1, T v2) {
                 T result;
                 E* target = reinterpret_cast<E*>(&result);
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     target[i] = v1.template at<E>(i) == v1.template at<E>(i) ? std::numeric_limits<E>::max() : 0;
                 }
                 return result;
@@ -296,7 +296,7 @@ namespace iris {
             T ____mm_cmpgt(T v1, T v2) {
                 T result;
                 E* target = reinterpret_cast<E*>(&result);
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     target[i] = v1.template at<E>(i) > v1.template at<E>(i) ? std::numeric_limits<E>::max() : 0;
                 }
                 return result;
@@ -306,7 +306,7 @@ namespace iris {
             T ____mm_cmpge(T v1, T v2) {
                 T result;
                 E* target = reinterpret_cast<E*>(&result);
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     target[i] = v1.template at<E>(i) >= v1.template at<E>(i) ? std::numeric_limits<E>::max() : 0;
                 }
                 return result;
@@ -316,7 +316,7 @@ namespace iris {
             T ____mm_cmplt(T v1, T v2) {
                 T result;
                 E* target = reinterpret_cast<E*>(&result);
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     target[i] = v1.template at<E>(i) < v1.template at<E>(i) ? std::numeric_limits<E>::max() : 0;
                 }
                 return result;
@@ -326,7 +326,7 @@ namespace iris {
             T ____mm_cmple(T v1, T v2) {
                 T result;
                 E* target = reinterpret_cast<E*>(&result);
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     target[i] = v1.template at<E>(i) <= v1.template at<E>(i) ? std::numeric_limits<E>::max() : 0;
                 }
                 return result;
@@ -336,7 +336,7 @@ namespace iris {
             T ____mm_cmpneq(T v1, T v2) {
                 T result;
                 E* target = reinterpret_cast<E*>(&result);
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     target[i] = v1.template at<E>(i) != v1.template at<E>(i) ? std::numeric_limits<E>::max() : 0;
                 }
                 return result;
@@ -346,7 +346,7 @@ namespace iris {
             T ____mm_cmpngt(T v1, T v2) {
                 T result;
                 E* target = reinterpret_cast<E*>(&result);
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     target[i] = !(v1.template at<E>(i) > v1.template at<E>(i)) ? std::numeric_limits<E>::max() : 0;
                 }
                 return result;
@@ -356,7 +356,7 @@ namespace iris {
             T ____mm_cmpnge(T v1, T v2) {
                 T result;
                 E* target = reinterpret_cast<E*>(&result);
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     target[i] = !(v1.template at<E>(i) >= v1.template at<E>(i)) ? std::numeric_limits<E>::max() : 0;
                 }
                 return result;
@@ -366,7 +366,7 @@ namespace iris {
             T ____mm_cmpnlt(T v1, T v2) {
                 T result;
                 E* target = reinterpret_cast<E*>(&result);
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     target[i] = !(v1.template at<E>(i) < v1.template at<E>(i)) ? std::numeric_limits<E>::max() : 0;
                 }
                 return result;
@@ -376,7 +376,7 @@ namespace iris {
             T ____mm_cmpnle(T v1, T v2) {
                 T result;
                 E* target = reinterpret_cast<E*>(&result);
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     target[i] = !(v1.template at<E>(i) <= v1.template at<E>(i)) ? std::numeric_limits<E>::max() : 0;
                 }
                 return result;
@@ -455,7 +455,7 @@ namespace iris {
             template<typename T, typename E>
             T ____mm_cmpord(T v1, T v2){
                 T result;
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     bool x = v1.template at<E>(i) == std::numeric_limits<float>::quiet_NaN();
                     bool y = v1.template at<E>(i) == std::numeric_limits<float>::quiet_NaN();
                     result.template at<E>(i) = ( x || y ) ? std::numeric_limits<E>::max() : 0;
@@ -466,7 +466,7 @@ namespace iris {
             template<typename T, typename E>
             T ____mm_cmpunord(T v1, T v2){
                 T result;
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     bool x = v1.template at<E>(i) != std::numeric_limits<float>::quiet_NaN();
                     bool y = v1.template at<E>(i) != std::numeric_limits<float>::quiet_NaN();
                     result.template at<E>(i) = ( x || y ) ? std::numeric_limits<E>::max() : 0;
@@ -524,7 +524,7 @@ namespace iris {
             T ____mm_and(T v1, T v2) {
                 T result;
                 uint8_t* target = reinterpret_cast<uint8_t*>(&result);
-                for(int i = 0; i < sizeof(T)/sizeof(uint8_t); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(uint8_t); i++) {
                     target[i] = v1.template at<uint8_t>(i) & v2.template at<uint8_t>(i);
                 }
                 return result;
@@ -534,7 +534,7 @@ namespace iris {
             T ____mm_or(T v1, T v2) {
                 T result;
                 uint8_t* target = reinterpret_cast<uint8_t*>(&result);
-                for(int i = 0; i < sizeof(T)/sizeof(uint8_t); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(uint8_t); i++) {
                     target[i] = v1.template at<uint8_t>(i) | v2.template at<uint8_t>(i);
                 }
                 return result;
@@ -544,7 +544,7 @@ namespace iris {
             T ____mm_xor(T v1, T v2) {
                 T result;
                 uint8_t* target = reinterpret_cast<uint8_t*>(&result);
-                for(int i = 0; i < sizeof(T)/sizeof(uint8_t); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(uint8_t); i++) {
                     target[i] = v1.template at<uint8_t>(i) ^ v2.template at<uint8_t>(i);
                 }
                 return result;
@@ -554,7 +554,7 @@ namespace iris {
             T ____mm_andnot(T v1, T v2) {
                 T result;
                 uint8_t* target = reinterpret_cast<uint8_t*>(&result);
-                for(int i = 0; i < sizeof(T)/sizeof(uint8_t); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(uint8_t); i++) {
                     target[i] = (~v1.template at<uint8_t>(i)) & v2.template at<uint8_t>(i);
                 }
                 return result;
@@ -567,7 +567,7 @@ namespace iris {
                     result = reinterpret_cast<T*>(&e)[0];
                 } else {
                     U* target = reinterpret_cast<U*>(&result);
-                    for(int i = 0; i < sizeof(T)/sizeof(U); i++) {
+                    for(size_t i = 0; i < sizeof(T)/sizeof(U); i++) {
                         if(i == 0) {
                             target[i] = e;
                         } else {
@@ -582,7 +582,7 @@ namespace iris {
             T ____mm_packs(T v1, T v2){
                 T result;
                 To* target = reinterpret_cast<To*>(&result);
-                for(int i = 0; i < sizeof(T)/sizeof(From); i++){
+                for(size_t i = 0; i < sizeof(T)/sizeof(From); i++){
                     From temp = reinterpret_cast<From*>(&v1)[i];
                     if(temp > std::numeric_limits<To>::max()) {
                         *target = std::numeric_limits<To>::max();
@@ -593,7 +593,7 @@ namespace iris {
                     }
                     target++;
                 }
-                for(int i = 0; i < sizeof(T)/sizeof(From); i++){
+                for(size_t i = 0; i < sizeof(T)/sizeof(From); i++){
                     From temp = reinterpret_cast<From*>(&v2)[i];
                     if(temp > std::numeric_limits<To>::max()) {
                         *target = std::numeric_limits<To>::max();
@@ -611,7 +611,7 @@ namespace iris {
             T ____bits_front(size_t N) {
                 T result;
                 std::memset(&result, 0, sizeof(T));
-                for(int i = 0; i < (sizeof(T)*8 - N); i++) {
+                for(size_t i = 0; i < (sizeof(T)*8 - N); i++) {
                     result |= 1 << i;
                 }
                 return result;
@@ -639,7 +639,7 @@ namespace iris {
             T ____mm_sll(T v, T count) {
                 T result;
                 std::memset(&result, 0, sizeof(T));
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     if(count.template at<int64_t>(0) < sizeof(E)-1) {
                         result.template at<E>(i) = v.template at<E>(i) << count.template at<int64_t>(0);
                     }
@@ -651,7 +651,7 @@ namespace iris {
             T ____mm_slli(T v, int32_t imm) {
                 T result;
                 std::memset(&result, 0, sizeof(T));
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     if(reinterpret_cast<uint8_t*>(&imm)[0] < sizeof(E)-1) {
                         result.template at<E>(i) = v.template at<E>(i) << reinterpret_cast<uint8_t*>(&imm)[0];
                     }
@@ -663,7 +663,7 @@ namespace iris {
             T ____mm_srl(T v, T count) {
                 T result;
                 std::memset(&result, 0, sizeof(T));
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     result.template at<E>(i) = ____shift_right_zero_extend(v.template at<E>(i),count.template at<int64_t>(0));
                 }
                 return result;
@@ -673,7 +673,7 @@ namespace iris {
             T ____mm_srli(T v, int32_t imm) {
                 T result;
                 std::memset(&result, 0, sizeof(T));
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     result.template at<E>(i) = ____shift_right_zero_extend(v.template at<E>(i),reinterpret_cast<uint8_t*>(&imm)[0]);
                 }
                 return result;
@@ -683,7 +683,7 @@ namespace iris {
             T ____mm_sra(T v, T count) {
                 T result;
                 std::memset(&result, 0, sizeof(T));
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     result.template at<E>(i) = ____shift_right_sign_extend(v.template at<E>(i),count.template at<int64_t>(0));
                 }
                 return result;
@@ -692,7 +692,7 @@ namespace iris {
             template<typename T, typename E>
             T ____mm_srai(T v, int32_t imm) {
                 T result;
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     result.template at<E>(i) = ____shift_right_sign_extend(v.template at<E>(i),reinterpret_cast<uint8_t*>(&imm)[0]);
                 }
                 return result;
@@ -706,7 +706,7 @@ namespace iris {
             template<typename T, typename E>
             T ____mm_rcp(T v) {
                 T result;
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     result.template at<E>(i) = static_cast<E>(1.0)/v.template at<E>(i);
                 }
                 return result;
@@ -721,7 +721,7 @@ namespace iris {
             template<typename T, typename E>
             T ____mm_rsqrt(T v) {
                 T result;
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     result.template at<E>(i) = static_cast<E>(1.0)/std::sqrt(v.template at<E>(i));
                 }
                 return result;
@@ -737,7 +737,7 @@ namespace iris {
             template<typename T, typename E>
             T ____mm_sqrt(T v) {
                 T result;
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     result.template at<E>(i) = std::sqrt(v.template at<E>(i));
                 }
                 return result;
@@ -770,7 +770,7 @@ namespace iris {
             T ____mm_load_single_all(E const * source) {
                 T result;
                 E e = *source;
-                for(int i = 0; i < sizeof(T)/sizeof(E); i++) {
+                for(size_t i = 0; i < sizeof(T)/sizeof(E); i++) {
                     result.template at<E>(i) = e;
                 }
                 return result;
@@ -1071,8 +1071,8 @@ namespace iris {
         template<typename T>
         T __vld1_lane(typename T::elementType* src, T v, int pos) {
             T result;
-            for(int i = 0; i < T::length; i++) {
-                if(i == pos) {
+            for(size_t i = 0; i < T::length; i++) {
+                if(i == static_cast<size_t>(pos)) {
                     result.template at<typename T::elementType>(i) = *src;
                 } else {
                     result.template at<typename T::elementType>(i) = v.template at<typename T::elementType>(i);
@@ -1106,7 +1106,7 @@ namespace iris {
         template<typename T, typename R>
         R __vcgt(T v1, T v2) {
             R result;
-            for(int i = 0; i < T::length; i++) {
+            for(size_t i = 0; i < T::length; i++) {
                 if(v1.template at<typename T::elementType>(i) > v2.template at<typename T::elementType>(i)) {
                     result.template at<typename R::elementType>(i) = std::numeric_limits<typename R::elementType>::max();
                 } else {
@@ -1119,7 +1119,7 @@ namespace iris {
         template<typename T, typename R>
         R __vcge(T v1, T v2) {
             R result;
-            for(int i = 0; i < T::length; i++) {
+            for(size_t i = 0; i < T::length; i++) {
                 if(v1.template at<typename T::elementType>(i) >= v2.template at<typename T::elementType>(i)) {
                     result.template at<typename R::elementType>(i) = std::numeric_limits<typename R::elementType>::max();
                 } else {
@@ -1132,7 +1132,7 @@ namespace iris {
         template<typename T, typename R>
         R __vclt(T v1, T v2) {
             R result;
-            for(int i = 0; i < T::length; i++) {
+            for(size_t i = 0; i < T::length; i++) {
                 if(v1.template at<typename T::elementType>(i) < v2.template at<typename T::elementType>(i)) {
                     result.template at<typename R::elementType>(i) = std::numeric_limits<typename R::elementType>::max();
                 } else {
@@ -1145,7 +1145,7 @@ namespace iris {
         template<typename T, typename R>
         R __vcle(T v1, T v2) {
             R result;
-            for(int i = 0; i < T::length; i++) {
+            for(size_t i = 0; i < T::length; i++) {
                 if(v1.template at<typename T::elementType>(i) <= v2.template at<typename T::elementType>(i)) {
                     result.template at<typename R::elementType>(i) = std::numeric_limits<typename R::elementType>::max();
                 } else {
@@ -1348,7 +1348,7 @@ namespace iris {
         template<typename T>
         T __vmin(T v1, T v2) {
             T result;
-            for(int i = 0; i < T::length; i++) {
+            for(size_t i = 0; i < T::length; i++) {
                 result.template at<typename T::elementType>(i) = v1.template at<typename T::elementType>(i) < v2.template at<typename T::elementType>(i) ? v1.template at<typename T::elementType>(i) : v2.template at<typename T::elementType>(i);
             }
             return result;
@@ -1357,7 +1357,7 @@ namespace iris {
         template<typename T>
         T __vmax(T v1, T v2) {
             T result;
-            for(int i = 0; i < T::length; i++) {
+            for(size_t i = 0; i < T::length; i++) {
                 result.template at<typename T::elementType>(i) = v1.template at<typename T::elementType>(i) > v2.template at<typename T::elementType>(i) ? v1.template at<typename T::elementType>(i) : v2.template at<typename T::elementType>(i);
             }
             return result;

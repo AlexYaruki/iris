@@ -5,12 +5,8 @@ using namespace iris;
 
 template<typename T>
 void test_vdup_n(T(*func)(typename T::elementType)) {
-	typename T::elementType data[T::length];
-	for (int i = 0; i < T::length; i++) {
-		data[i] = i;
-	}
 	T output = func((typename T::elementType)47);
-	for (int i = 0; i < T::length; i++) {
+	for (size_t i = 0; i < T::length; i++) {
 		bool cmp = output.template at<typename T::elementType>(i) == (typename T::elementType)47;
 		assert(cmp);
 	}

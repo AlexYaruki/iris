@@ -7,12 +7,12 @@ template <typename T>
 void test_vld1_lane(T(*func)(typename T::elementType*,T,int32_t)){
     typename T::elementType x = 47;
     T v;
-    for(int i = 0; i < T::length; i++) {
+    for(size_t i = 0; i < T::length; i++) {
         v.template at<typename T::elementType>(i) = i;
     }
-    for(int i = 0; i < T::length; i++) {
+    for(size_t i = 0; i < T::length; i++) {
         T result = func(&x,v,i);
-        for(int j = 0; j < T::length; j++) {
+        for(size_t j = 0; j < T::length; j++) {
             if(i == j) {
                 assert(result.template at<typename T::elementType>(i) == x);
             } else {

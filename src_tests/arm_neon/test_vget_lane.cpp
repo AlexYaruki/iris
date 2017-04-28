@@ -6,7 +6,7 @@ using namespace iris;
 template<typename T>
 void test_vget_lane(typename T::elementType(*func)(T,size_t)) {
 	T data;
-	for (int i = 0; i < T::length; i++) {
+	for (size_t i = 0; i < T::length; i++) {
 		data.template at<typename T::elementType>(i) = i;
 	}
 	for (size_t i = 0; i < T::length; i++) {

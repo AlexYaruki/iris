@@ -7,7 +7,7 @@ template<typename T>
 void test_vld1_dup(T(*func)(typename T::elementType*)) {
     typename T::elementType x = 47;
     T result = func(&x);
-    for(int i = 0; i < T::length; i++) {
+    for(size_t i = 0; i < T::length; i++) {
         assert(result.template at<typename T::elementType>(i) == x);
     }
 }
