@@ -1093,61 +1093,66 @@ namespace iris {
         template<typename T, typename R>
         R __vceq(T v1, T v2) {
             R result;
-            for(size_t i = 0; T::length; i++) {
+            for(size_t i = 0; i < T::length; i++) {
                 if(v1.template at<typename T::elementType>(i) == v2.template at<typename T::elementType>(i)) {
                     result.template at<typename R::elementType>(i) = std::numeric_limits<typename R::elementType>::max();
                 } else {
                     result.template at<typename R::elementType>(i) = std::numeric_limits<typename R::elementType>::min();
                 }
             }
+            return result;
         }
 
         template<typename T, typename R>
         R __vcgt(T v1, T v2) {
             R result;
-            for(size_t i = 0; T::length; i++) {
+            for(int i = 0; i < T::length; i++) {
                 if(v1.template at<typename T::elementType>(i) > v2.template at<typename T::elementType>(i)) {
                     result.template at<typename R::elementType>(i) = std::numeric_limits<typename R::elementType>::max();
                 } else {
                     result.template at<typename R::elementType>(i) = std::numeric_limits<typename R::elementType>::min();
                 }
             }
+            return result;
         }
 
         template<typename T, typename R>
         R __vcge(T v1, T v2) {
             R result;
-            for(size_t i = 0; T::length; i++) {
+            for(int i = 0; i < T::length; i++) {
                 if(v1.template at<typename T::elementType>(i) >= v2.template at<typename T::elementType>(i)) {
                     result.template at<typename R::elementType>(i) = std::numeric_limits<typename R::elementType>::max();
                 } else {
                     result.template at<typename R::elementType>(i) = std::numeric_limits<typename R::elementType>::min();
                 }
             }
+            return result;
         }
 
         template<typename T, typename R>
         R __vclt(T v1, T v2) {
             R result;
-            for(size_t i = 0; T::length; i++) {
+            for(int i = 0; i < T::length; i++) {
                 if(v1.template at<typename T::elementType>(i) < v2.template at<typename T::elementType>(i)) {
                     result.template at<typename R::elementType>(i) = std::numeric_limits<typename R::elementType>::max();
                 } else {
                     result.template at<typename R::elementType>(i) = std::numeric_limits<typename R::elementType>::min();
                 }
             }
+            return result;
         }
 
         template<typename T, typename R>
         R __vcle(T v1, T v2) {
             R result;
-            for(size_t i = 0; T::length; i++) {
+            for(int i = 0; i < T::length; i++) {
                 if(v1.template at<typename T::elementType>(i) <= v2.template at<typename T::elementType>(i)) {
                     result.template at<typename R::elementType>(i) = std::numeric_limits<typename R::elementType>::max();
                 } else {
                     result.template at<typename R::elementType>(i) = std::numeric_limits<typename R::elementType>::min();
                 }
             }
+            return result;
         }
 
 		/*
