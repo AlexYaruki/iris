@@ -1416,8 +1416,8 @@ namespace iris {
             return result;
         }
 
-        template<typename T, typename R, typename = typename std::enable_if<sizeof(T)/2 == sizeof(R)>::type>
-        R __vget_high(T v) {
+        template<typename T, typename R>
+        typename std::enable_if<sizeof(T)/2 == sizeof(R),R>::type __vget_high(T v) {
             R result;
             for(size_t i = T::length/2, j = 0; i < T::length; i++, j++) {
                 result.template at<typename R::elementType>(j) = v.template at<typename T::elementType>(i);
@@ -1425,8 +1425,8 @@ namespace iris {
             return result;
         }
 
-        template<typename T, typename R, typename = typename std::enable_if<sizeof(T)/2 == sizeof(R)>::type>
-        R __vget_low(T v) {
+        template<typename T, typename R>
+        typename std::enable_if<sizeof(T)/2 == sizeof(R),R>::type __vget_low(T v) {
             R result;
             for(size_t i = 0; i < R::length; i++) {
                 result.template at<typename R::elementType>(i) = v.template at<typename T::elementType>(i);
@@ -1554,7 +1554,35 @@ namespace iris {
         const auto& vcombine_f32 = __vcombine<float32x2_t,float32x4_t>;
         ////////////////////////////////////////////////////////////////////////
 
-        // ARM_NEON - vabs - 64-bit vector /////////////////////////////////////e
+        // ARM NEON - vget_low /////////////////////////////////////////////////
+        const auto& vget_low_s8  = __vget_low<int8x16_t,int8x8_t>;
+        const auto& vget_low_s16 = __vget_low<int16x8_t,int16x4_t>;
+        const auto& vget_low_s32 = __vget_low<int32x4_t,int32x2_t>;
+        const auto& vget_low_s64 = __vget_low<int64x2_t,int64x1_t>;
+
+        const auto& vget_low_u8  = __vget_low<uint8x16_t,uint8x8_t>;
+        const auto& vget_low_u16 = __vget_low<uint16x8_t,uint16x4_t>;
+        const auto& vget_low_u32 = __vget_low<uint32x4_t,uint32x2_t>;
+        const auto& vget_low_u64 = __vget_low<uint64x2_t,uint64x1_t>;
+
+        const auto& vget_low_f32 = __vget_low<float32x4_t,float32x2_t>;
+        /////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vget_high /////////////////////////////////////////////////
+        const auto& vget_high_s8  = __vget_high<int8x16_t,int8x8_t>;
+        const auto& vget_high_s16 = __vget_high<int16x8_t,int16x4_t>;
+        const auto& vget_high_s32 = __vget_high<int32x4_t,int32x2_t>;
+        const auto& vget_high_s64 = __vget_high<int64x2_t,int64x1_t>;
+
+        const auto& vget_high_u8  = __vget_high<uint8x16_t,uint8x8_t>;
+        const auto& vget_high_u16 = __vget_high<uint16x8_t,uint16x4_t>;
+        const auto& vget_high_u32 = __vget_high<uint32x4_t,uint32x2_t>;
+        const auto& vget_high_u64 = __vget_high<uint64x2_t,uint64x1_t>;
+
+        const auto& vget_high_f32 = __vget_high<float32x4_t,float32x2_t>;
+        /////////////////////////////////////////////////////////////////////////
+
+        // ARM_NEON - vabs - 64-bit vector //////////////////////////////////////
         const auto& vabs_s8 = __vabs<int8x8_t>;
         const auto& vabs_s16 = __vabs<int16x4_t>;
         const auto& vabs_s32 = __vabs<int32x2_t>;
