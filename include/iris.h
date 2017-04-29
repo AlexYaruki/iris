@@ -1434,8 +1434,8 @@ namespace iris {
             return result;
         }
 
-        template<typename T, typename R, typename = typename std::enable_if<sizeof(T)/2 == sizeof(R)>::type>
-        R __vcombine(T v1, T v2) {
+        template<typename T, typename R>
+        typename std::enable_if<sizeof(T)*2 == sizeof(R),R>::type __vcombine(T v1, T v2) {
             R result;
             for(size_t i = 0; i < T::length; i++) {
                 result.template at<typename R::elementType>(i) = v1.template at<typename T::elementType>(i);
@@ -1540,7 +1540,21 @@ namespace iris {
 
 #endif
 
-        // ARM_NEON - vabs - 64-bit vector /////////////////////////////////////
+        // ARM_NEON - vcombine /////////////////////////////////////////////////
+        const auto& vcombine_s8  = __vcombine< int8x8_t,int8x16_t>;
+        const auto& vcombine_s16 = __vcombine<int16x4_t,int16x8_t>;
+        const auto& vcombine_s32 = __vcombine<int32x2_t,int32x4_t>;
+        const auto& vcombine_s64 = __vcombine<int64x1_t,int64x2_t>;
+
+        const auto& vcombine_u8  = __vcombine< uint8x8_t,uint8x16_t>;
+        const auto& vcombine_u16 = __vcombine<uint16x4_t,uint16x8_t>;
+        const auto& vcombine_u32 = __vcombine<uint32x2_t,uint32x4_t>;
+        const auto& vcombine_u64 = __vcombine<uint64x1_t,uint64x2_t>;
+
+        const auto& vcombine_f32 = __vcombine<float32x2_t,float32x4_t>;
+        ////////////////////////////////////////////////////////////////////////
+
+        // ARM_NEON - vabs - 64-bit vector /////////////////////////////////////e
         const auto& vabs_s8 = __vabs<int8x8_t>;
         const auto& vabs_s16 = __vabs<int16x4_t>;
         const auto& vabs_s32 = __vabs<int32x2_t>;
