@@ -1346,6 +1346,11 @@ namespace iris {
 
 		/////////////////////////////////////////////////////////////////////////////
 
+        template <typename T>
+        T __vmul_n(T v, typename T::elementType x) {
+            return __vmul(v,__vdup<T,typename T::elementType>(x));
+        }
+
         template<typename T>
         T __vmin(T v1, T v2) {
             T result;
@@ -1638,6 +1643,25 @@ namespace iris {
         using namespace expansion;
 
 #endif
+        // ARM NEON - vmul_n - 64-bit vector ///////////////////////////////////
+        const auto& vmul_n_s16 = __vmul_n<int16x4_t>;
+        const auto& vmul_n_s32 = __vmul_n<int32x2_t>;
+
+        const auto& vmul_n_u16 = __vmul_n<uint16x4_t>;
+        const auto& vmul_n_u32 = __vmul_n<uint32x2_t>;
+
+        const auto& vmul_n_f32 = __vmul_n<float32x2_t>;
+        ////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vmul_n - 128-bit vector ///////////////////////////////////
+        const auto& vmulq_n_s16 = __vmul_n<int16x8_t>;
+        const auto& vmulq_n_s32 = __vmul_n<int32x4_t>;
+
+        const auto& vmulq_n_u16 = __vmul_n<uint16x8_t>;
+        const auto& vmulq_n_u32 = __vmul_n<uint32x4_t>;
+
+        const auto& vmulq_n_f32 = __vmul_n<float32x4_t>;
+        ////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vorr - 64-bit vector /////////////////////////////////////
         const auto& vorr_s8  = __vorr<int8x8_t>;
