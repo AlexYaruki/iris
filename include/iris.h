@@ -522,7 +522,7 @@ namespace iris {
             }
 
             template<typename T>
-            T ____mm_bic(T v1, T v2) {
+            T ____mm_and(T v1, T v2) {
                 T result;
                 uint8_t* target = reinterpret_cast<uint8_t*>(&result);
                 for(size_t i = 0; i < sizeof(T)/sizeof(uint8_t); i++) {
@@ -552,7 +552,7 @@ namespace iris {
             }
 
             template<typename T>
-            T ____mm_bicnot(T v1, T v2) {
+            T ____mm_andnot(T v1, T v2) {
                 T result;
                 uint8_t* target = reinterpret_cast<uint8_t*>(&result);
                 for(size_t i = 0; i < sizeof(T)/sizeof(uint8_t); i++) {
