@@ -1460,6 +1460,32 @@ namespace iris {
             return result;
         }
 
+        template<typename T>
+        T __vrev32(typename std::enable_if<sizeof(typename T::elementType) < 4,T>::type v) {
+            T result;
+            const size_t packs = (T::length * sizeof(typename T::elementType))/4;
+            const size_t elementsPerPack = T::length/packs;
+            for(size_t j = 0; j < packs; j++) {
+                for(size_t i = elementsPerPack * j, k = 0; i < elementsPerPack * (j+1) ; i++, k++) {
+                    result.template at<typename T::elementType>(i) = v.template at<typename T::elementType>((elementsPerPack * (j+1)) - (k + 1));
+                }
+            }
+            return result;
+        }
+
+        template<typename T>
+        T __vrev16(typename std::enable_if<sizeof(typename T::elementType) < 2,T>::type v) {
+            T result;
+            const size_t packs = (T::length * sizeof(typename T::elementType))/2;
+            const size_t elementsPerPack = T::length/packs;
+            for(size_t j = 0; j < packs; j++) {
+                for(size_t i = elementsPerPack * j, k = 0; i < elementsPerPack * (j+1) ; i++, k++) {
+                    result.template at<typename T::elementType>(i) = v.template at<typename T::elementType>((elementsPerPack * (j+1)) - (k + 1));
+                }
+            }
+            return result;
+        }
+
         // ARM NEON - Types - 64-bit
 
         using int8x8_t  = vector<int8_t,8>;
@@ -1573,6 +1599,24 @@ namespace iris {
         const auto& vrev64q_u32 = __vrev64<uint32x4_t>;
 
         const auto& vrev64q_f32 = __vrev64<float32x4_t>;
+
+        const auto& vrev32_s8  = __vrev32< int8x8_t>;
+        const auto& vrev32_s16 = __vrev32<int16x4_t>;
+
+        const auto& vrev32_u8  = __vrev32< uint8x8_t>;
+        const auto& vrev32_u16 = __vrev32<uint16x4_t>;
+
+        const auto& vrev32q_s8  = __vrev32<int8x16_t>;
+        const auto& vrev32q_s16 = __vrev32<int16x8_t>;
+
+        const auto& vrev32q_u8  = __vrev32<uint8x16_t>;
+        const auto& vrev32q_u16 = __vrev32<uint16x8_t>;
+
+        const auto& vrev16_s8  = __vrev16< int8x8_t>;
+        const auto& vrev16_u8  = __vrev16< uint8x8_t>;
+
+        const auto& vrev16q_s8  = __vrev16<int8x16_t>;
+        const auto& vrev16q_u8  = __vrev16<uint8x16_t>;
 
         // ARM_NEON - vcombine /////////////////////////////////////////////////
         const auto& vcombine_s8  = __vcombine< int8x8_t,int8x16_t>;
