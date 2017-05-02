@@ -2457,6 +2457,25 @@ namespace iris {
         const auto& vmlaq_lane_f32 = __vmla_lane<float32x4_t>;
         ///////////////////////////////////////////////////////////////////////////
 
+        // ARM NEON - vmla_n - 64-bit vector ///////////////////////////////////////////////////////
+        const auto& vmla_n_s16 = __vmla_n<int16x4_t>;
+        const auto& vmla_n_s32 = __vmla_n<int32x2_t>;
+
+        const auto& vmla_n_u16 = __vmla_n<uint16x4_t>;
+        const auto& vmla_n_u32 = __vmla_n<uint32x2_t>;
+
+        const auto& vmla_n_f32 = __vmla_n<float32x2_t>;
+        ///////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vmla_n - 128-bit vector ///////////////////////////////////////////////////////
+        const auto& vmlaq_n_s16 = __vmla_n<int16x8_t>;
+        const auto& vmlaq_n_s32 = __vmla_n<int32x4_t>;
+
+        const auto& vmlaq_n_u16 = __vmla_n<uint16x8_t>;
+        const auto& vmlaq_n_u32 = __vmla_n<uint32x4_t>;
+
+        const auto& vmlaq_n_f32 = __vmla_n<float32x4_t>;
+        ///////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vmls - 64-bit vector ///////////////////////////////////////////////////////
         const auto& vmls_s8  = __vmls< int8x8_t>;
@@ -2500,6 +2519,26 @@ namespace iris {
         const auto& vmlsq_lane_u32 = __vmls_lane<uint32x4_t>;
 
         const auto& vmlsq_lane_f32 = __vmls_lane<float32x4_t>;
+        ///////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vmls_n - 64-bit vector ///////////////////////////////////////////////////////
+        const auto& vmls_n_s16 = __vmls_n<int16x4_t>;
+        const auto& vmls_n_s32 = __vmls_n<int32x2_t>;
+
+        const auto& vmls_n_u16 = __vmls_n<uint16x4_t>;
+        const auto& vmls_n_u32 = __vmls_n<uint32x2_t>;
+
+        const auto& vmls_n_f32 = __vmls_n<float32x2_t>;
+        ///////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vmls_n - 128-bit vector ///////////////////////////////////////////////////////
+        const auto& vmlsq_n_s16 = __vmls_n<int16x8_t>;
+        const auto& vmlsq_n_s32 = __vmls_n<int32x4_t>;
+
+        const auto& vmlsq_n_u16 = __vmls_n<uint16x8_t>;
+        const auto& vmlsq_n_u32 = __vmls_n<uint32x4_t>;
+
+        const auto& vmlsq_n_f32 = __vmls_n<float32x4_t>;
         ///////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vceq - 64-bit vectors ///////////////////////////////////////
