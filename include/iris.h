@@ -780,7 +780,7 @@ namespace iris {
 
 #ifndef _MSC_VER
         using __int64 = int64_t;
-#endif
+#endif //_MSC_VER
         using __m64 = vector<uint8_t, 8>;
         using __m128 = vector<uint8_t,16>;
 
@@ -1058,7 +1058,7 @@ namespace iris {
         }
 
         template<typename T, typename E>
-        T __vdup_lane(T v, size_t i) {
+        T __vdup_lane(T v, int32_t i) {
             return __vdup<T,E>(__vget_lane<T,E>(v,i));
         }
 
@@ -1173,10 +1173,6 @@ namespace iris {
 		/*
 
 		vmvn
-		vand
-		vorr
-		veor
-		vbic
 		vbsl
 
 		*/
@@ -1328,11 +1324,29 @@ namespace iris {
             return result;
         }
 
+        template<typename T>
+        T __vmul_lane(T v1, T v2, int32_t x) {
+            T p = __vdup_lane<T,typename T::elementType>(v2,x);
+            return __vmul(v1, p);
+        }
+
 		// ARM NEON - Multiplication-Accumulate /////////////////////////////////////
 
         template<typename T>
         T __vmla(T v1, T v2, T v3) {
             return __vadd(v3, __vmul(v1, v2));
+        }
+
+        template<typename T>
+        T __vmla_n(T v1, T v2, typename T::elementType x) {
+            auto p = __vdup<T,typename T::elementType>(x);
+            return __vadd(v1, __vmul(v2, p));
+        }
+
+        template<typename T>
+        T __vmla_lane(T v1, T v2, T v3, int32_t x) {
+            auto p = __vdup_lane<T,typename T::elementType>(v3,x);
+            return __vadd(v1, __vmul(v2, p));
         }
 
 		/////////////////////////////////////////////////////////////////////////////
@@ -1343,6 +1357,18 @@ namespace iris {
 		T __vmls(T v1, T v2, T v3) {
 			return __vsub(v3, __vmul(v1, v2));
 		}
+
+        template<typename T>
+        T __vmls_n(T v1, T v2, typename T::elementType x) {
+            auto p = __vdup<T,typename T::elementType>(x);
+            return __vsub(v1, __vmul(v2, p));
+        }
+
+        template<typename T>
+        T __vmls_lane(T v1, T v2, T v3, int32_t x) {
+            auto p = __vdup_lane<T,typename T::elementType>(v3,x);
+            return __vsub(v1, __vmul(v2, p));
+        }
 
 		/////////////////////////////////////////////////////////////////////////////
 
@@ -1497,7 +1523,7 @@ namespace iris {
             for(int32_t i = 0; i <= n; i++) {
                 result.template at<typename T::elementType>(i) = v2.template at<typename T::elementType>(i);
             }
-            for(int32_t i = n+1, j = T::length - 1; i < T::length; i++, j--) {
+            for(int32_t i = n+1, j = T::length - 1; (size_t)i < T::length; i++, j--) {
                 result.template at<typename T::elementType>(i) = v1.template at<typename T::elementType>(j);
             }
             return result;
@@ -1662,6 +1688,27 @@ namespace iris {
 
         const auto& vmulq_n_f32 = __vmul_n<float32x4_t>;
         ////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vmul_lane - 64-bit vector ///////////////////////////////////
+        const auto& vmul_lane_s16 = __vmul_lane<int16x4_t>;
+        const auto& vmul_lane_s32 = __vmul_lane<int32x2_t>;
+
+        const auto& vmul_lane_u16 = __vmul_lane<uint16x4_t>;
+        const auto& vmul_lane_u32 = __vmul_lane<uint32x2_t>;
+
+        const auto& vmul_lane_f32 = __vmul_lane<float32x2_t>;
+        ////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vmul_lane - 128-bit vector ///////////////////////////////////
+        const auto& vmulq_lane_s16 = __vmul_lane<int16x8_t>;
+        const auto& vmulq_lane_s32 = __vmul_lane<int32x4_t>;
+
+        const auto& vmulq_lane_u16 = __vmul_lane<uint16x8_t>;
+        const auto& vmulq_lane_u32 = __vmul_lane<uint32x4_t>;
+
+        const auto& vmulq_lane_f32 = __vmul_lane<float32x4_t>;
+        ////////////////////////////////////////////////////////////////////////
+
 
         // ARM NEON - vorr - 64-bit vector /////////////////////////////////////
         const auto& vorr_s8  = __vorr<int8x8_t>;
@@ -2390,6 +2437,27 @@ namespace iris {
         const auto& vmlaq_f32 = __vmla<float32x4_t>;
         ///////////////////////////////////////////////////////////////////////////
 
+        // ARM NEON - vmla_lane - 64-bit vector ///////////////////////////////////////////////////////
+        const auto& vmla_lane_s16 = __vmla_lane<int16x4_t>;
+        const auto& vmla_lane_s32 = __vmla_lane<int32x2_t>;
+
+        const auto& vmla_lane_u16 = __vmla_lane<uint16x4_t>;
+        const auto& vmla_lane_u32 = __vmla_lane<uint32x2_t>;
+
+        const auto& vmla_lane_f32 = __vmla_lane<float32x2_t>;
+        ///////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vmla_lane - 128-bit vector ///////////////////////////////////////////////////////
+        const auto& vmlaq_lane_s16 = __vmla_lane<int16x8_t>;
+        const auto& vmlaq_lane_s32 = __vmla_lane<int32x4_t>;
+
+        const auto& vmlaq_lane_u16 = __vmla_lane<uint16x8_t>;
+        const auto& vmlaq_lane_u32 = __vmla_lane<uint32x4_t>;
+
+        const auto& vmlaq_lane_f32 = __vmla_lane<float32x4_t>;
+        ///////////////////////////////////////////////////////////////////////////
+
+
         // ARM NEON - vmls - 64-bit vector ///////////////////////////////////////////////////////
         const auto& vmls_s8  = __vmls< int8x8_t>;
         const auto& vmls_s16 = __vmls<int16x4_t>;
@@ -2412,6 +2480,26 @@ namespace iris {
         const auto& vmlsq_u32 = __vmls<uint32x4_t>;
 
         const auto& vmlsq_f32 = __vmls<float32x4_t>;
+        ///////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vmls_lane - 64-bit vector ///////////////////////////////////////////////////////
+        const auto& vmls_lane_s16 = __vmls_lane<int16x4_t>;
+        const auto& vmls_lane_s32 = __vmls_lane<int32x2_t>;
+
+        const auto& vmls_lane_u16 = __vmls_lane<uint16x4_t>;
+        const auto& vmls_lane_u32 = __vmls_lane<uint32x2_t>;
+
+        const auto& vmls_lane_f32 = __vmls_lane<float32x2_t>;
+        ///////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vmls_lane - 128-bit vector ///////////////////////////////////////////////////////
+        const auto& vmlsq_lane_s16 = __vmls_lane<int16x8_t>;
+        const auto& vmlsq_lane_s32 = __vmls_lane<int32x4_t>;
+
+        const auto& vmlsq_lane_u16 = __vmls_lane<uint16x8_t>;
+        const auto& vmlsq_lane_u32 = __vmls_lane<uint32x4_t>;
+
+        const auto& vmlsq_lane_f32 = __vmls_lane<float32x4_t>;
         ///////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vceq - 64-bit vectors ///////////////////////////////////////
