@@ -786,9 +786,9 @@ namespace iris {
             }
         }
 
-#ifndef _MSC_VER
-        using __int64 = int64_t;
-#endif //_MSC_VER
+        #ifndef _MSC_VER
+            using __int64 = int64_t;
+        #endif //_MSC_VER
         using __m64 = vector<uint8_t, 8>;
         using __m128 = vector<uint8_t,16>;
 
@@ -1087,6 +1087,8 @@ namespace iris {
             return result;
         }
 
+
+
         template<typename T>
         T __vld1_lane(typename T::elementType* src, T v, int pos) {
             T result;
@@ -1104,6 +1106,16 @@ namespace iris {
         T __vld1_dup(typename T::elementType* src) {
             typename T::elementType x = *src;
             T result = __vdup<T,typename T::elementType>(x);
+            return result;
+        }
+
+        template<typename T,size_t lanes = sizeof(T) / sizeof(typename T::vectorType)>
+        T __vld_dup(const typename T::vectorType::elementType * src) {
+            T result;
+            for(size_t i = 0; i < lanes; i++) {
+                typename T::vectorType::elementType x = src[i];
+                result.val[i] = __vdup<typename T::vectorType,typename T::vectorType::elementType>(x);
+            }
             return result;
         }
 
