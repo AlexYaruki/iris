@@ -1363,6 +1363,12 @@ namespace iris {
             return __vadd(v3, __vmul(v1, v2));
         }
 
+        template<typename T, typename R>
+        R __vmlal(T v1, T v2, T v3) {
+            R result = __vmull<T,R>(v1,v2);
+            return __vaddw(result,v3);
+        }
+
         template<typename T>
         T __vmla_n(T v1, T v2, typename T::elementType x) {
             auto p = __vdup<T,typename T::elementType>(x);
@@ -2702,6 +2708,16 @@ namespace iris {
         const auto& vmlaq_u32 = __vmla<uint32x4_t>;
 
         const auto& vmlaq_f32 = __vmla<float32x4_t>;
+        ///////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vmlal ///////////////////////////////////////////////////////
+        const auto& vmlal_s8  = __vmlal< int8x8_t,int16x8_t>;
+        const auto& vmlal_s16 = __vmlal<int16x4_t,int32x4_t>;
+        const auto& vmlal_s32 = __vmlal<int32x2_t,int64x2_t>;
+
+        const auto& vmlal_u8  = __vmlal< uint8x8_t,uint16x8_t>;
+        const auto& vmlal_u16 = __vmlal<uint16x4_t,uint32x4_t>;
+        const auto& vmlal_u32 = __vmlal<uint32x2_t,uint64x2_t>;
         ///////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vmla_lane - 64-bit vector ///////////////////////////////////////////////////////
