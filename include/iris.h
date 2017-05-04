@@ -1115,6 +1115,61 @@ namespace iris {
             *dst = v.template at<typename T::elementType>(pos);
         }
 
+        template<typename T>
+        T __iris__abs(T x) {
+            if(x < 0) {
+                return x * static_cast<T>(-1);
+            } else {
+                return x;
+            }
+        }
+
+        template<>
+        float __iris__abs(float x) {
+            float result = std::fabs(x);
+            std::cout << "Calling std::fabs: " << x << " => " << result << std::endl;
+            return std::fabs(x);
+        }
+
+        template<typename T>
+        T __vabs(T v) {
+            T result;
+            for(size_t i = 0; i < T::length; i++) {
+                typename T::elementType x = v.template at<typename T::elementType>(i);
+                result.template at<typename T::elementType>(i) = __iris__abs(x);
+            }
+            return result;
+        }
+
+        template<typename T>
+        T __iris__qabs(T x) {
+            if(x < 0) {
+                T temp = x * static_cast<T>(-1);
+                if(temp > x) {
+                    return temp;
+                } else {
+                    return std::numeric_limits<T>::max();
+                }
+            } else {
+                return x;
+            }
+        }
+
+        template<>
+        float __iris__qabs(float x) {
+            return std::abs(x);
+        }
+
+        template<typename T>
+        T __vqabs(T v) {
+            T result;
+            for(size_t i = 0; i < T::length; i++) {
+                typename T::elementType x = v.template at<typename T::elementType>(i);
+                result.template at<typename T::elementType>(i) = __iris__qabs(x);
+            }
+            return result;
+        }
+
 		// ARM NEON - Comparision ///////////////////////////////////////////////////
 
         template<typename T, typename R>
@@ -1182,15 +1237,28 @@ namespace iris {
             return result;
         }
 
-		/*
+        ////
 
-		vcagt
-		vcage
-		vcalt
-		vcale
-		vtst
+        // ARM NEON - Comparision (absolute)
+        template<typename T, typename R>
+        R __vcagt(T v1, T v2) {
+            return __vcgt<T,R>(__vabs<T>(v1),__vabs<T>(v2));
+        }
 
-		*/
+        template<typename T, typename R>
+        R __vcage(T v1, T v2) {
+            return __vcge<T,R>(__vabs<T>(v1),__vabs<T>(v2));
+        }
+
+        template<typename T, typename R>
+        R __vcalt(T v1, T v2) {
+            return __vclt<T,R>(__vabs<T>(v1),__vabs<T>(v2));
+        }
+
+        template<typename T, typename R>
+        R __vcale(T v1, T v2) {
+            return __vcle<T,R>(__vabs<T>(v1),__vabs<T>(v2));
+        }
 
 		/////////////////////////////////////////////////////////////////////////////
 
@@ -1432,58 +1500,7 @@ namespace iris {
             return result;
         }
 
-        template<typename T>
-        T __iris__abs(T x) {
-            if(x < 0) {
-                return x * static_cast<T>(-1);
-            } else {
-                return x;
-            }
-        }
 
-        template<>
-        float __iris__abs(float x) {
-            return std::fabs(x);
-        }
-
-        template<typename T>
-        T __vabs(T v) {
-            T result;
-            for(size_t i = 0; i < T::length; i++) {
-                typename T::elementType x = v.template at<typename T::elementType>(i);
-                result.template at<typename T::elementType>(i) = __iris__abs(x);
-            }
-            return result;
-        }
-
-        template<typename T>
-        T __iris__qabs(T x) {
-            if(x < 0) {
-                T temp = x * static_cast<T>(-1);
-                if(temp > x) {
-                    return temp;
-                } else {
-                    return std::numeric_limits<T>::max();
-                }
-            } else {
-                return x;
-            }
-        }
-
-        template<>
-        float __iris__qabs(float x) {
-            return std::abs(x);
-        }
-
-        template<typename T>
-        T __vqabs(T v) {
-            T result;
-            for(size_t i = 0; i < T::length; i++) {
-                typename T::elementType x = v.template at<typename T::elementType>(i);
-                result.template at<typename T::elementType>(i) = __iris__qabs(x);
-            }
-            return result;
-        }
 
         template<typename T, typename R>
         typename std::enable_if<sizeof(T)/2 == sizeof(R),R>::type __vget_high(T v) {
@@ -2974,6 +2991,38 @@ namespace iris {
 
         const auto& vcleq_f32 = __vcle< float32x4_t, uint32x4_t>;
         ///////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vcagt - 64-bit vectors ////////////////////////////////////
+        const auto& vcagt_f32 = __vcagt< float32x2_t, uint32x2_t>;
+        ////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vcagt - 128-bit vectors ///////////////////////////////////
+        const auto& vcagtq_f32 = __vcagt< float32x4_t, uint32x4_t>;
+        ////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vcage - 64-bit vectors ////////////////////////////////////
+        const auto& vcage_f32 = __vcage< float32x2_t, uint32x2_t>;
+        ////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vcage - 128-bit vectors ///////////////////////////////////
+        const auto& vcageq_f32 = __vcage< float32x4_t, uint32x4_t>;
+        ////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vcalt - 64-bit vectors ////////////////////////////////////
+        const auto& vcalt_f32 = __vcalt< float32x2_t, uint32x2_t>;
+        ////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vcalt - 128-bit vectors ///////////////////////////////////
+        const auto& vcaltq_f32 = __vcalt< float32x4_t, uint32x4_t>;
+        ////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vcale - 64-bit vectors ////////////////////////////////////
+        const auto& vcale_f32 = __vcale< float32x2_t, uint32x2_t>;
+        ////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vcale - 128-bit vectors ///////////////////////////////////
+        const auto& vcaleq_f32 = __vcale< float32x4_t, uint32x4_t>;
+        ////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vmax - 64-bit vectors ////////////////////////////////////
         const auto& vmax_u8  = __vmax< uint8x8_t>;
