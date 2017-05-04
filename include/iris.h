@@ -1402,6 +1402,11 @@ namespace iris {
             return __vsub(v1, __vmul(v2, p));
         }
 
+        template<typename T, typename R>
+        R __vmlsl(T v1, T v2, T v3) {
+            R result = __vmull<T,R>(v1,v2);
+            return __vsubw(result,v3);
+        }
 		/////////////////////////////////////////////////////////////////////////////
 
         template <typename T>
@@ -2710,6 +2715,14 @@ namespace iris {
         const auto& vmlaq_f32 = __vmla<float32x4_t>;
         ///////////////////////////////////////////////////////////////////////////
 
+        // ARM_NEON - vfma - 64-bit vector
+        const auto& vfma_f32 = vmla_f32;
+        //
+
+        // ARM_NEON - vfma - 128-bit vector
+        const auto& vfmaq_f32 = vmlaq_f32;
+        //
+
         // ARM NEON - vmlal ///////////////////////////////////////////////////////
         const auto& vmlal_s8  = __vmlal< int8x8_t,int16x8_t>;
         const auto& vmlal_s16 = __vmlal<int16x4_t,int32x4_t>;
@@ -2782,6 +2795,24 @@ namespace iris {
         const auto& vmlsq_u32 = __vmls<uint32x4_t>;
 
         const auto& vmlsq_f32 = __vmls<float32x4_t>;
+        ///////////////////////////////////////////////////////////////////////////
+
+        // ARM_NEON - vfma - 64-bit vector
+        const auto& vfms_f32 = vmls_f32;
+        //
+
+        // ARM_NEON - vfma - 128-bit vector
+        const auto& vfmsq_f32 = vmlsq_f32;
+        //
+
+        // ARM NEON - vmlsl ///////////////////////////////////////////////////////
+        const auto& vmlsl_s8  = __vmlsl< int8x8_t,int16x8_t>;
+        const auto& vmlsl_s16 = __vmlsl<int16x4_t,int32x4_t>;
+        const auto& vmlsl_s32 = __vmlsl<int32x2_t,int64x2_t>;
+
+        const auto& vmlsl_u8  = __vmlsl< uint8x8_t,uint16x8_t>;
+        const auto& vmlsl_u16 = __vmlsl<uint16x4_t,uint32x4_t>;
+        const auto& vmlsl_u32 = __vmlsl<uint32x2_t,uint64x2_t>;
         ///////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vmls_lane - 64-bit vector ///////////////////////////////////////////////////////
