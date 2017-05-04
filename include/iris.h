@@ -1075,12 +1075,12 @@ namespace iris {
             return result;
         }
 
-        template<typename T,size_t lanes = sizeof(T) / sizeof(typename T::vectorType)>
+        template<typename T>
         T __vld(const typename T::vectorType::elementType * src) {
             T result;
-            size_t elementCount = lanes * T::vectorType::length;
-            for(size_t i = 0, laneId = 0; i < elementCount; i++, laneId = (laneId + 1) % lanes) {
-                result.val[laneId].template at<typename T::vectorType::elementType>(i/lanes) = src[i];
+            size_t elementCount = T::lanes * T::vectorType::length;
+            for(size_t i = 0; i < elementCount; i++) {
+                result.val[i % T::lanes].template at<typename T::vectorType::elementType>(i/T::lanes) = src[i];
             }
             return result;
         }
