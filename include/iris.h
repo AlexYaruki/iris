@@ -1099,6 +1099,15 @@ namespace iris {
         }
 
         template<typename T>
+        T __vld_lane(typename T::vectorType::elementType* src, T v, int32_t pos) {
+            T result = v;
+            for(size_t i = 0, j = 0; i < T::lanes; i++, j++) {
+                result.val[i].template at<typename T::vectorType::elementType>(pos) = src[j];
+            }
+            return result;
+        }
+
+        template<typename T>
         T __vld1_dup(typename T::elementType* src) {
             typename T::elementType x = *src;
             T result = __vdup<T,typename T::elementType>(x);
@@ -2214,6 +2223,7 @@ namespace iris {
         const auto& vld1q_dup_f32 = __vld1_dup<float32x4_t>;
         /////////////////////////////////////////////////////////////////////////////
 
+
         // ARM NEON - vst1 - 64-bit vector //////////////////////////////////////////
         const auto& vst1_u8  = __vst1<uint8x8_t>;
         const auto& vst1_u16 = __vst1<uint16x4_t>;
@@ -2298,6 +2308,30 @@ namespace iris {
         const auto& vld2q_f32 = __vld<float32x4x2_t>;
         ///////////////////////////////////////////////////////////////////////////
 
+        // ARM NEON - vld2_lane - 64-bit vector //////////////////////////////////////////
+        const auto& vld2_lane_u8  = __vld_lane<uint8x8x2_t>;
+        const auto& vld2_lane_u16 = __vld_lane<uint16x4x2_t>;
+        const auto& vld2_lane_u32 = __vld_lane<uint32x2x2_t>;
+
+        const auto& vld2_lane_s8  = __vld_lane<int8x8x2_t>;
+        const auto& vld2_lane_s16 = __vld_lane<int16x4x2_t>;
+        const auto& vld2_lane_s32 = __vld_lane<int32x2x2_t>;
+
+        const auto& vld2_lane_f32 = __vld_lane<float32x2x2_t>;
+        /////////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vld2_lane - 128-bit vector //////////////////////////////////////////
+        const auto& vld2q_lane_u8  = __vld_lane<uint8x16x2_t>;
+        const auto& vld2q_lane_u16 = __vld_lane<uint16x8x2_t>;
+        const auto& vld2q_lane_u32 = __vld_lane<uint32x4x2_t>;
+
+        const auto& vld2q_lane_s8  = __vld_lane<int8x16x2_t>;
+        const auto& vld2q_lane_s16 = __vld_lane<int16x8x2_t>;
+        const auto& vld2q_lane_s32 = __vld_lane<int32x4x2_t>;
+
+        const auto& vld2q_lane_f32 = __vld_lane<float32x4x2_t>;
+        /////////////////////////////////////////////////////////////////////////////
+
         // ARM NEON vld3 - 64-bit vectors ///////////////////////////////////////////
         const auto& vld3_s8  = __vld<int8x8x3_t>;
         const auto& vld3_s16 = __vld<int16x4x3_t>;
@@ -2326,6 +2360,30 @@ namespace iris {
         const auto& vld3q_f32 = __vld<float32x4x3_t>;
         ///////////////////////////////////////////////////////////////////////////
 
+        // ARM NEON - vld3_lane - 64-bit vector //////////////////////////////////////////
+        const auto& vld3_lane_u8  = __vld_lane<uint8x8x3_t>;
+        const auto& vld3_lane_u16 = __vld_lane<uint16x4x3_t>;
+        const auto& vld3_lane_u32 = __vld_lane<uint32x2x3_t>;
+
+        const auto& vld3_lane_s8  = __vld_lane<int8x8x3_t>;
+        const auto& vld3_lane_s16 = __vld_lane<int16x4x3_t>;
+        const auto& vld3_lane_s32 = __vld_lane<int32x2x3_t>;
+
+        const auto& vld3_lane_f32 = __vld_lane<float32x2x3_t>;
+        /////////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vld3_lane - 128-bit vector //////////////////////////////////////////
+        const auto& vld3q_lane_u8  = __vld_lane<uint8x16x3_t>;
+        const auto& vld3q_lane_u16 = __vld_lane<uint16x8x3_t>;
+        const auto& vld3q_lane_u32 = __vld_lane<uint32x4x3_t>;
+
+        const auto& vld3q_lane_s8  = __vld_lane<int8x16x3_t>;
+        const auto& vld3q_lane_s16 = __vld_lane<int16x8x3_t>;
+        const auto& vld3q_lane_s32 = __vld_lane<int32x4x3_t>;
+
+        const auto& vld3q_lane_f32 = __vld_lane<float32x4x3_t>;
+        /////////////////////////////////////////////////////////////////////////////
+
         // ARM NEON vld4 - 64-bit vectors ///////////////////////////////////////////
         const auto& vld4_s8  = __vld<int8x8x4_t>;
         const auto& vld4_s16 = __vld<int16x4x4_t>;
@@ -2353,6 +2411,30 @@ namespace iris {
 
         const auto& vld4q_f32 = __vld<float32x4x4_t>;
         ///////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vld4_lane - 64-bit vector //////////////////////////////////////////
+        const auto& vld4_lane_u8  = __vld_lane<uint8x8x4_t>;
+        const auto& vld4_lane_u16 = __vld_lane<uint16x4x4_t>;
+        const auto& vld4_lane_u32 = __vld_lane<uint32x2x4_t>;
+
+        const auto& vld4_lane_s8  = __vld_lane<int8x8x4_t>;
+        const auto& vld4_lane_s16 = __vld_lane<int16x4x4_t>;
+        const auto& vld4_lane_s32 = __vld_lane<int32x2x4_t>;
+
+        const auto& vld4_lane_f32 = __vld_lane<float32x2x4_t>;
+        /////////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vld4_lane - 128-bit vector //////////////////////////////////////////
+        const auto& vld4q_lane_u8  = __vld_lane<uint8x16x4_t>;
+        const auto& vld4q_lane_u16 = __vld_lane<uint16x8x4_t>;
+        const auto& vld4q_lane_u32 = __vld_lane<uint32x4x4_t>;
+
+        const auto& vld4q_lane_s8  = __vld_lane<int8x16x4_t>;
+        const auto& vld4q_lane_s16 = __vld_lane<int16x8x4_t>;
+        const auto& vld4q_lane_s32 = __vld_lane<int32x4x4_t>;
+
+        const auto& vld4q_lane_f32 = __vld_lane<float32x4x4_t>;
+        /////////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vdup/vmov - 64-bit vector ///////////////////////////////////
         const auto& vdup_n_s8  = __vdup<int8x8_t ,int8_t >;
