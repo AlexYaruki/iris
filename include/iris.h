@@ -1031,6 +1031,7 @@ namespace iris {
 #if !defined(_MSC_VER)
     using x86::__int64;
 #endif
+
     using x86::__m64;
     using x86::__m128;
     using namespace x86::mmx;
@@ -1113,16 +1114,6 @@ namespace iris {
         T __vld1_dup(typename T::elementType* src) {
             typename T::elementType x = *src;
             T result = __vdup<T,typename T::elementType>(x);
-            return result;
-        }
-
-        template<typename T,size_t lanes = sizeof(T) / sizeof(typename T::vectorType)>
-        T __vld_dup(const typename T::vectorType::elementType * src) {
-            T result;
-            for(size_t i = 0; i < lanes; i++) {
-                typename T::vectorType::elementType x = src[i];
-                result.val[i] = __vdup<typename T::vectorType,typename T::vectorType::elementType>(x);
-            }
             return result;
         }
 
@@ -1340,6 +1331,21 @@ namespace iris {
             for(size_t i = 0; i < T::length; i++) {
                 result.template at<typename T::elementType>(i) = v1.template at<typename T::elementType>(i) + v2.template at<typename T::elementType>(i);
                 result.template at<typename T::elementType>(i) /=2;
+            }
+            return result;
+        }
+
+        template<typename T>
+        T __vrhadd(T v1, T v2) {
+            T result;
+            for(size_t i = 0; i < T::length; i++) {
+                typename T::elementType x = (v1.template at<typename T::elementType>(i) + v2.template at<typename T::elementType>(i));
+                if((x >> 1) * 2 == x) {
+                    x = x >> 1;
+                } else {
+                    x = (x >> 1) + 1;
+                }
+                result.template at<typename T::elementType>(i) = x;
             }
             return result;
         }
@@ -2743,6 +2749,26 @@ namespace iris {
         const auto& vhaddq_s8  = __vhadd<int8x16_t>;
         const auto& vhaddq_s16 = __vhadd<int16x8_t>;
         const auto& vhaddq_s32 = __vhadd<int32x4_t>;
+        ///////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vrhadd - 64-bit vectors ///////////////////////////////////////////////////////
+        const auto& vrhadd_u8  = __vrhadd<uint8x8_t>;
+        const auto& vrhadd_u16 = __vrhadd<uint16x4_t>;
+        const auto& vrhadd_u32 = __vrhadd<uint32x2_t>;
+
+        const auto& vrhadd_s8  = __vrhadd<int16x8_t>;
+        const auto& vrhadd_s16 = __vrhadd<int32x4_t>;
+        const auto& vrhadd_s32 = __vrhadd<int64x2_t>;
+        ///////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vrhadd - 128-bit vectors ///////////////////////////////////////////////////////
+        const auto& vrhaddq_u8  = __vrhadd<uint8x16_t>;
+        const auto& vrhaddq_u16 = __vrhadd<uint16x8_t>;
+        const auto& vrhaddq_u32 = __vrhadd<uint32x4_t>;
+
+        const auto& vrhaddq_s8  = __vrhadd<int8x16_t>;
+        const auto& vrhaddq_s16 = __vrhadd<int16x8_t>;
+        const auto& vrhaddq_s32 = __vrhadd<int32x4_t>;
         ///////////////////////////////////////////////////////////////////////////
 
         // ARM NEON - vqadd - 64-bit vectors ///////////////////////////////////////////////////////
