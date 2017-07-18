@@ -1671,7 +1671,7 @@ namespace iris {
             T result;
             for(size_t i = 0; i < T::length; i++) {
                 typename T::elementType x = v.template at<typename T::elementType>(i);
-                result.template at<typename T::elementType>(i) = x * (typename T::elementType)-1;
+                result.template at<typename T::elementType>(i) = -x;
             }
             return result;
         }
