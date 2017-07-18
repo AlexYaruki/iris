@@ -2,3 +2,4 @@ build/
 build_xcode/
 x64/
 /nbproject/
+/.vscode/settings.json

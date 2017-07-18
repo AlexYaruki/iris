@@ -1666,6 +1666,16 @@ namespace iris {
             return result;
         }
 
+        template<typename T>
+        T __vneg(T v) {
+            T result;
+            for(size_t i = 0; i < T::length; i++) {
+                typename T::elementType x = v.template at<typename T::elementType>(i);
+                result.template at<typename T::elementType>(i) = x * (typename T::elementType)-1;
+            }
+            return result;
+        }
+
         template <typename T, typename R>
         typename std::enable_if<T::length == R::length,R>::type __vcvt(T v) {
             R result;
@@ -1775,7 +1785,7 @@ namespace iris {
         using float32x4x3_t = multi_vector<float32x4_t,3>;
         using float32x4x4_t = multi_vector<float32x4_t,4>;
 
-#ifdef IRIS_ARM_NEON_EXPANSION
+    #ifdef IRIS_ARM_NEON_EXPANSION
 
         namespace expansion {
 
@@ -1839,7 +1849,7 @@ namespace iris {
 
         using namespace expansion;
 
-#endif
+    #endif
 
         const auto& vcvt_f32_u32 = __vcvt<float32x2_t,uint32x2_t>;
         const auto& vcvt_f32_s32 = __vcvt<float32x2_t, int32x2_t>;
@@ -2021,6 +2031,19 @@ namespace iris {
         const auto& vornq_u32 = __vorn<uint32x4_t>;
         const auto& vornq_u64 = __vorn<uint64x2_t>;
         ////////////////////////////////////////////////////////////////////////
+
+        // ARM NEON - vneg - 64-bit vector /////////////////////////////////////
+        const auto& vneg_s8  = __vneg<int8x8_t>;
+        const auto& vneg_s16 = __vneg<int16x4_t>;
+        const auto& vneg_s32 = __vneg<int32x2_t>;
+        const auto& vneg_f32 = __vneg<float32x2_t>;
+
+        const auto& vnegq_s8  = __vneg<int8x16_t>;
+        const auto& vnegq_s16 = __vneg<int16x8_t>;
+        const auto& vnegq_s32 = __vneg<int32x4_t>;
+        const auto& vnegq_f32 = __vneg<float32x4_t>;
+        ////////////////////////////////////////////////////////////////////////
+        
 
         // ARM NEON - vext - 64-bit vector /////////////////////////////////////
         const auto& vext_s8  = __vext<int8x8_t>;
