@@ -3,9 +3,13 @@
 
 Purpose of this project is to provide software implementation for vectorizing intrinsics available on ARM and x86 processors.
 
+Project is provided as header-only library
+
 Additionally:
-* Ability to target and test software that uses ARM NEON intrinsics on x86 machines
-* Ability to target and test x86 intrinsics from newer architectures when corresponding hardware is not yet available ( April 2017 - Intel Cannonlake)
+* Ability to target and test software that uses ARM NEON intrinsics on x86 machines and vice versa
+* Ability to target and test ARM/x86 intrinsics from newer architectures when corresponding hardware is not yet available ( April 2017 - SVE(ARMv8-A) or AVX512(Intel Cannonlake))
+
+
 
 #### Intrinsics to be supported:
 * ARM
@@ -34,3 +38,5 @@ Additionally:
     * KNC
 
 Current implementation status is available here: [Status Summary](https://docs.google.com/spreadsheets/d/1H0BMm1WNZbmqU08OF6IEh1O1Io6G4MI7xHDM-IHPwb8/edit#gid=1193430138)
+
+License: Apache 2.0
