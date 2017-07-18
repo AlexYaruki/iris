@@ -1675,6 +1675,23 @@ namespace iris {
             }
             return result;
         }
+        
+        template<typename T>
+        T __vqneg(T v) {
+            T result;
+            for(size_t i = 0; i < T::length; i++) {
+                typename T::elementType x = v.template at<typename T::elementType>(i);
+                std::cout << "X: " << x << std::endl;
+                std::cout << "Min: " << std::numeric_limits<typename T::elementType>::min() << std::endl;
+                if(x == std::numeric_limits<typename T::elementType>::min()) {
+                    x = -std::numeric_limits<typename T::elementType>::max();
+                } else {
+                    x = -x;
+                }
+                result.template at<typename T::elementType>(i) = x;
+            }
+            return result;
+        }
 
         template <typename T, typename R>
         typename std::enable_if<T::length == R::length,R>::type __vcvt(T v) {
@@ -2044,7 +2061,18 @@ namespace iris {
         const auto& vnegq_f32 = __vneg<float32x4_t>;
         ////////////////////////////////////////////////////////////////////////
         
-
+        // ARM NEON - vqneg - 64-bit vector ////////////////////////////////////
+        const auto& vqneg_s8  = __vqneg<int8x8_t>;
+        const auto& vqneg_s16 = __vqneg<int16x4_t>;
+        const auto& vqneg_s32 = __vqneg<int32x2_t>;
+        ////////////////////////////////////////////////////////////////////////
+        
+        // ARM NEON - vqneg - 64-bit vector ////////////////////////////////////
+        const auto& vqnegq_s8  = __vqneg<int8x16_t>;
+        const auto& vqnegq_s16 = __vqneg<int16x8_t>;
+        const auto& vqnegq_s32 = __vqneg<int32x4_t>;
+        ////////////////////////////////////////////////////////////////////////
+        
         // ARM NEON - vext - 64-bit vector /////////////////////////////////////
         const auto& vext_s8  = __vext<int8x8_t>;
         const auto& vext_s16 = __vext<int16x4_t>;
