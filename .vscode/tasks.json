@@ -1,0 +1,30 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "taskName": "cmake",
+            "command": "cd build && cmake ..",
+            "type": "shell",
+            "problemMatcher": []
+        },
+        {
+            "taskName": "clean",
+            "command": "cd build && make clean",
+            "type": "shell"
+        },
+        {
+            "taskName": "build",
+            "command": "cd build && make -j8",
+            "type": "shell",
+            "problemMatcher": []
+        },
+        {
+            "taskName": "test",
+            "command": "cd build && ctest",
+            "type": "shell",
+            "problemMatcher": []
+        }
+    ]
+}

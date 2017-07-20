@@ -3,8 +3,6 @@
 
 Purpose of this project is to provide software implementation for vectorizing intrinsics available on ARM and x86 processors.
 
-Project is provided as header-only library
-
 Additionally:
 * Ability to target and test software that uses ARM NEON intrinsics on x86 machines and vice versa
 * Ability to target and test ARM/x86 intrinsics from newer architectures when corresponding hardware is not yet available ( April 2017 - SVE(ARMv8-A) or AVX512(Intel Cannonlake))
