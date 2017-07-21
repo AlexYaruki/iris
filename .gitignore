@@ -4,3 +4,4 @@ build_xcode/
 x64/
 /nbproject/
 /.vscode/settings.json
+.vscode/.cmaketools.json

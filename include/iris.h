@@ -1731,6 +1731,20 @@ namespace iris {
                 }
                 return result;
             }
+            
+            template<typename T>
+            T __vrshr_n(T v, uint32_t shift) {
+                T result;
+                for(size_t i = 0; i < T::length; i++) {
+                    typename T::elementType value = v.template at<typename T::elementType>(i);
+                    if(value % 2 != 0) {
+                        value = value + 1;
+                    }
+                    typename T::elementType part = value >> shift;
+                    result.template at<typename T::elementType>(i) = part;
+                }
+                return result;
+            }
 
 
             template <typename T, typename R>
@@ -3451,6 +3465,29 @@ namespace iris {
             const auto& vshrq_n_s64 = __vshr_n<int64x2_t>;
             ////////////////////////////////////////////////////////////////////////
 
+            // ARM NEON - vshr_n - 64-bit vectors ////////////////////////////////////
+            const auto& vrshr_n_u8  = __vrshr_n<uint8x8_t>;
+            const auto& vrshr_n_u16 = __vrshr_n<uint16x4_t>;
+            const auto& vrshr_n_u32 = __vrshr_n<uint32x2_t>;
+            const auto& vrshr_n_u64 = __vrshr_n<uint64x1_t>;
+            
+            const auto& vrshr_n_s8  = __vrshr_n<int8x8_t>;
+            const auto& vrshr_n_s16 = __vrshr_n<int16x4_t>;
+            const auto& vrshr_n_s32 = __vrshr_n<int32x2_t>;
+            const auto& vrshr_n_s64 = __vrshr_n<int64x1_t>;
+            ////////////////////////////////////////////////////////////////////////
+
+            // ARM NEON - vshr - 128-bit vectors ////////////////////////////////////
+            const auto& vrshrq_n_u8  = __vrshr_n<uint8x16_t>;
+            const auto& vrshrq_n_u16 = __vrshr_n<uint16x8_t>;
+            const auto& vrshrq_n_u32 = __vrshr_n<uint32x4_t>;
+            const auto& vrshrq_n_u64 = __vrshr_n<uint64x2_t>;
+            
+            const auto& vrshrq_n_s8  = __vrshr_n<int8x16_t>;
+            const auto& vrshrq_n_s16 = __vrshr_n<int16x8_t>;
+            const auto& vrshrq_n_s32 = __vrshr_n<int32x4_t>;
+            const auto& vrshrq_n_s64 = __vrshr_n<int64x2_t>;
+            ////////////////////////////////////////////////////////////////////////
 
         }
 

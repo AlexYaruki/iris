@@ -23,8 +23,7 @@
         {
             "taskName": "test",
             "command": "cd build && ctest",
-            "type": "shell",
-            "problemMatcher": []
+            "type": "shell"
         }
     ]
 }
