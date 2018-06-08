@@ -1370,6 +1370,19 @@ namespace iris {
                 return result;
             }
 
+            template<typename T, typename R>
+            R __vaddhn(T v1, T v2) {
+                R result;
+                for(size_t i = 0; i < T::length; i++) {
+                    auto x = v1.template at<typename T::elementType>(i);
+                    auto y = v2.template at<typename T::elementType>(i);
+                    auto temp = x + y;
+                    auto part = reinterpret_cast<typename R::elementType*>(&temp)[1];
+                    result.template at<typename R::elementType>(i) = part;
+                }
+                return result;
+            }
+
             // vraddhn
             // vaddhn
             // vrhadd
@@ -2837,6 +2850,12 @@ namespace iris {
             const auto& vaddw_s8  = __vaddw<int16x8_t, int8x8_t>;
             const auto& vaddw_s16 = __vaddw<int32x4_t, int16x4_t>;
             const auto& vaddw_s32 = __vaddw<int64x2_t, int32x2_t>;
+            ///////////////////////////////////////////////////////////////////////////
+
+            // ARM NEON - vaddhn ///////////////////////////////////////////////////////
+            const auto& vaddhn_s16  = __vaddhn<int16x8_t, int8x8_t>;
+            const auto& vaddhn_s32 = __vaddhn<int32x4_t, int16x4_t>;
+            const auto& vaddhn_s64 = __vaddhn<int64x2_t, int32x2_t>;
             ///////////////////////////////////////////////////////////////////////////
 
             // ARM NEON - vhadd - 64-bit vectors ///////////////////////////////////////////////////////
