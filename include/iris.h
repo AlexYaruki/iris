@@ -104,7 +104,6 @@ namespace iris {
                             z *= -1;
                         }
                         tmp += z;
-                        std::cout << "x: " << (int)x << ",y: " << (int)y << ",tmp: " << tmp << std::endl;
                     }
                     result.template at<E_TMP>(0) = tmp;
                     return result;
@@ -1150,8 +1149,6 @@ namespace iris {
 
             template<>
             float __iris__abs(float x) {
-                float result = std::fabs(x);
-                std::cout << "Calling std::fabs: " << x << " => " << result << std::endl;
                 return std::fabs(x);
             }
 
@@ -1383,8 +1380,26 @@ namespace iris {
                 return result;
             }
 
-            // vraddhn
-            // vaddhn
+            template<typename T, typename R>
+            R __vraddhn(T v1, T v2) {
+                R result;
+                for(size_t i = 0; i < T::length; i++) {
+                    auto x = v1.template at<typename T::elementType>(i);
+                    auto y = v2.template at<typename T::elementType>(i);
+                    typename T::elementType sum = 0;
+                    if((x > 0) && (y > std::numeric_limits<typename T::elementType>::max() - x)) {
+                        sum = std::numeric_limits<typename T::elementType>::max();
+                    } else if ((x < 0) && (y < std::numeric_limits<typename T::elementType>::min() - x)) {
+                        sum = std::numeric_limits<typename T::elementType>::min();
+                    } else {
+                        sum = x + y;
+                    }
+                    auto part = reinterpret_cast<typename R::elementType*>(&sum)[1];
+                    result.template at<typename R::elementType>(i) = part;
+                }
+                return result;
+            }
+
             // vrhadd
 
             /////////////////////////////////////////////////////////////////////////////
@@ -1697,8 +1712,6 @@ namespace iris {
                 T result;
                 for(size_t i = 0; i < T::length; i++) {
                     typename T::elementType x = v.template at<typename T::elementType>(i);
-                    std::cout << "X: " << x << std::endl;
-                    std::cout << "Min: " << std::numeric_limits<typename T::elementType>::min() << std::endl;
                     if(x == std::numeric_limits<typename T::elementType>::min()) {
                         x = -std::numeric_limits<typename T::elementType>::max();
                     } else {
@@ -2896,6 +2909,16 @@ namespace iris {
             const auto& vrhaddq_s8  = __vrhadd<int8x16_t>;
             const auto& vrhaddq_s16 = __vrhadd<int16x8_t>;
             const auto& vrhaddq_s32 = __vrhadd<int32x4_t>;
+            ///////////////////////////////////////////////////////////////////////////
+
+            // ARM NEON - vraddhn - 128-bit vectors ///////////////////////////////////////////////////////
+            const auto& vraddhn_u16  = __vraddhn<uint16x8_t,uint8x8_t>;
+            const auto& vraddhn_u32 = __vraddhn<uint32x4_t,uint16x4_t>;
+            const auto& vraddhn_u64 = __vraddhn<uint64x2_t,uint32x2_t>;
+
+            const auto& vraddhn_s16  = __vraddhn<int16x8_t,int8x8_t>;
+            const auto& vraddhn_s32 = __vraddhn<int32x4_t,int16x4_t>;
+            const auto& vraddhn_s64 = __vraddhn<int64x2_t,int32x2_t>;
             ///////////////////////////////////////////////////////////////////////////
 
             // ARM NEON - vqadd - 64-bit vectors ///////////////////////////////////////////////////////
