@@ -4,26 +4,26 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "taskName": "cmake",
+            "label": "cmake",
             "command": "cd build && cmake ..",
             "type": "shell",
             "problemMatcher": []
         },
         {
-            "taskName": "clean",
+            "label": "clean",
             "command": "cd build && make clean",
             "type": "shell"
         },
         {
-            "taskName": "build",
+            "label": "build",
             "command": "cd build && make -j8",
             "type": "shell",
             "problemMatcher": []
         },
         {
-            "taskName": "test",
+            "label": "test",
             "command": "cd build && ctest",
-            "type": "shell"
+            "type": "shell",
         }
     ]
 }

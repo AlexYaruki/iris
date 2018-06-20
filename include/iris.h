@@ -1258,6 +1258,21 @@ namespace iris {
                 return result;
             }
 
+            template<typename T, typename R>
+            T __vtst(T v1, T v2) {
+                T result;
+                for(size_t i = 0; i < T::length; i++) {
+                    typename T::elementType temp = v1.template at<typename T::elementType>(i) & v2.template at<typename T::elementType>(i);
+                    if(temp == 0) {
+                        result.template at<typename T::elementType>(i) = 0;
+                    } else {
+                        result.template at<typename T::elementType>(i) = 1;
+                    }
+                }
+                return result;
+            }
+
+
             ////
 
             // ARM NEON - Comparision (absolute)
@@ -3257,6 +3272,26 @@ namespace iris {
             const auto& vceqq_s32 = __vceq<   int32x4_t, uint32x4_t>;
 
             const auto& vceqq_f32 = __vceq< float32x4_t, uint32x4_t>;
+            ///////////////////////////////////////////////////////////////////////////
+
+            // ARM NEON - vtst - 64-bit vectors ///////////////////////////////////////
+            const auto& vtst_u8  = __vtst<   uint8x8_t,  uint8x8_t>;
+            const auto& vtst_u16 = __vtst<  uint16x4_t, uint16x4_t>;
+            const auto& vtst_u32 = __vtst<  uint32x2_t, uint32x2_t>;
+
+            const auto& vtst_s8  = __vtst<    int8x8_t,  uint8x8_t>;
+            const auto& vtst_s16 = __vtst<   int16x4_t, uint16x4_t>;
+            const auto& vtst_s32 = __vtst<   int32x2_t, uint32x2_t>;
+            ///////////////////////////////////////////////////////////////////////////
+
+            // ARM NEON - vtst - 128-bit vectors ///////////////////////////////////////
+            const auto& vtstq_u8  = __vtst<  uint8x16_t, uint8x16_t>;
+            const auto& vtstq_u16 = __vtst<  uint16x8_t, uint16x8_t>;
+            const auto& vtstq_u32 = __vtst<  uint32x4_t, uint32x4_t>;
+
+            const auto& vtstq_s8  = __vtst<   int8x16_t, uint8x16_t>;
+            const auto& vtstq_s16 = __vtst<   int16x8_t, uint16x8_t>;
+            const auto& vtstq_s32 = __vtst<   int32x4_t, uint32x4_t>;
             ///////////////////////////////////////////////////////////////////////////
 
             // ARM NEON - vcgt - 64-bit vectors ///////////////////////////////////////
