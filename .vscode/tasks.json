@@ -5,7 +5,7 @@
     "tasks": [
         {
             "label": "cmake",
-            "command": "cd build && cmake ..",
+            "command": "mkdir -p build && cd build && cmake ..",
             "type": "shell",
             "problemMatcher": []
         },
