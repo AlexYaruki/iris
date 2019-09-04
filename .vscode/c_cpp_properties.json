@@ -35,7 +35,8 @@
                 "/usr/lib/clang/4.0.1/include",
                 "/usr/include",
                 "/usr/include/x86_64-linux-gnu",
-                "${workspaceRoot}"
+                "${workspaceRoot}",
+                "${workspaceRoot}/include"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",

@@ -3,7 +3,7 @@
 #include <numeric>
 #include <iostream>
 
-#include <iris.h>
+#include <iris/iris.h>
 using namespace iris;
 
 template<typename T, typename R>

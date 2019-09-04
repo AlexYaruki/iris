@@ -1,4 +1,4 @@
-#include <iris.h>
+#include <iris/iris.h>
 #include <cassert>
 #include <iostream>
 #include <bitset>

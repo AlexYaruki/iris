@@ -1,4 +1,4 @@
-#include <iris.h>
+#include <iris/iris.h>
 #include <cassert>
 
 using namespace iris;
@@ -15,7 +15,6 @@ void test_vadd(T(*func)(T,T)) {
         assert(result.template at<typename T::elementType>(i) == static_cast<typename T::elementType>(2*i+1));
     }
 }
-
 
 int main() {
     test_vadd(vadd_s8);

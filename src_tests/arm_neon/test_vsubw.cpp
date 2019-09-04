@@ -1,5 +1,5 @@
 #include <cassert>
-#include <iris.h>
+#include <iris/iris.h>
 using namespace iris;
 
 template<typename R, typename T>
